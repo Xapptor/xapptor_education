@@ -8,7 +8,7 @@
 ##### Add it to your package's pubspec.yaml file
 ```yml
 dependencies:
-    xapptor_education: ^0.0.1
+    xapptor_education: ^0.0.2
 ```
 
 ### **2 - Install it**
