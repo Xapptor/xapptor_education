@@ -28,7 +28,6 @@ dependencies:
   xapptor_ui: ^0.0.3
 
 dependency_overrides:
-  platform: ^3.1.0
   xapptor_logic:
     path: ../xapptor_logic
   xapptor_router:
