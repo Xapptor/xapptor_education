@@ -1,15 +1,11 @@
-import 'package:flutter/widgets.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
-import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_logic/get_user_info.dart';
-import 'package:xapptor_logic/timestamp_to_date.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'course_certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/widgets/coming_soon_container.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
@@ -19,6 +15,7 @@ import 'certificate_visualizer.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_logic/is_portrait.dart';
+import 'generate_certificate.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
   const CertificatesAndRewards({
@@ -26,16 +23,24 @@ class CertificatesAndRewards extends StatefulWidget {
     required this.text_color,
     required this.button_color_1,
     required this.button_color_2,
-    required this.pdf_converter_url,
-    required this.local_host_pdf_converter_url,
+    required this.institution_name,
+    required this.location,
+    required this.website,
+    required this.logo_image_path,
+    required this.ribbon_image_path,
+    required this.signature_image_path,
   });
 
   final Color topbar_color;
   final Color text_color;
   final Color button_color_1;
   final Color button_color_2;
-  final String pdf_converter_url;
-  final String local_host_pdf_converter_url;
+  final String institution_name;
+  final String location;
+  final String website;
+  final String logo_image_path;
+  final String ribbon_image_path;
+  final String signature_image_path;
 
   @override
   _CertificatesAndRewardsState createState() => _CertificatesAndRewardsState();
@@ -45,7 +50,6 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   double current_page = 0;
   final PageController page_controller = PageController(initialPage: 0);
 
-  List certificates_id = [];
   List courses_id = [];
   List<CourseCertificate> certificates = [];
   Map<String, dynamic> user_info = {};
@@ -109,41 +113,22 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   }
 
   get_certificates() async {
+    String user_name = user_info["firstname"] + " " + user_info["lastname"];
+
     certificates.clear();
     if (user_info["certificates"] != null) {
       if (user_info["certificates"].length > 0) {
-        certificates_id = List.from(user_info["certificates"]);
+        List certificates_id = List.from(user_info["certificates"]);
 
         for (var certificate_id in certificates_id) {
-          await FirebaseFirestore.instance
-              .collection("certificates")
-              .doc(certificate_id)
-              .get()
-              .then((snapshot_certificate) async {
-            Map<String, dynamic> data_certificate =
-                snapshot_certificate.data()!;
-
-            await FirebaseFirestore.instance
-                .collection("courses")
-                .doc(data_certificate["course_id"])
-                .get()
-                .then((snapshot_course) {
-              Map<String, dynamic> data_course = snapshot_course.data()!;
-
-              certificates.add(
-                CourseCertificate(
-                  id: certificate_id,
-                  date: timestamp_to_date(data_certificate["date"]),
-                  course_name: data_course["name"],
-                  user_name:
-                      user_info["firstname"] + " " + user_info["lastname"],
-                  user_id: user_id,
-                ),
-              );
-              setState(() {});
-            });
-          });
+          certificates.add(
+            await get_certificate_from_id(
+              id: certificate_id,
+              user_name: user_name,
+            ),
+          );
         }
+        setState(() {});
       }
     }
   }
@@ -181,7 +166,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             text: text_list[0],
             foreground_color: Colors.white,
             background_color: widget.button_color_1,
-            page: certificates_id.isEmpty
+            page: certificates.isEmpty
                 ? Container(
                     child: Center(
                       child: Text(
@@ -212,19 +197,23 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                 add_new_app_screen(
                                   AppScreen(
                                     name:
-                                        "home/certificates_and_rewards/certificate_$certificate_id",
+                                        "home/certificates_and_rewards/$certificate_id",
                                     child: CertificatesVisualizer(
                                       certificate: certificates[i],
                                       topbar_color: widget.topbar_color,
-                                      pdf_converter_url:
-                                          widget.pdf_converter_url,
-                                      local_host_pdf_converter_url:
-                                          widget.local_host_pdf_converter_url,
+                                      institution_name: widget.institution_name,
+                                      location: widget.location,
+                                      website: widget.website,
+                                      logo_image_path: widget.logo_image_path,
+                                      ribbon_image_path:
+                                          widget.ribbon_image_path,
+                                      signature_image_path:
+                                          widget.signature_image_path,
                                     ),
                                   ),
                                 );
                                 open_screen(
-                                    "home/certificates_and_rewards/certificate_$certificate_id");
+                                    "home/certificates_and_rewards/$certificate_id");
                               },
                               child: Center(
                                 child: Container(
