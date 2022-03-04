@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -36,24 +37,24 @@ class CertificatesVisualizer extends StatefulWidget {
 
 class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   String html_string = "";
-  String pdf_base64 = "";
   Uint8List? pdf_bytes = null;
 
   // Download base64 PDF certificate from backend.
 
   download_certificate() async {
-    pdf_bytes = await generate_pdf_certificate(
-      institution_name: widget.institution_name,
-      location: widget.location,
-      website: widget.website,
-      logo_image_path: widget.logo_image_path,
-      ribbon_image_path: widget.ribbon_image_path,
-      signature_image_path: widget.signature_image_path,
-      certificate: widget.certificate!,
-      main_color: widget.topbar_color,
-    );
-    pdf_base64 = base64.encode(pdf_bytes!);
-    setState(() {});
+    Timer(Duration(milliseconds: 500), () async {
+      pdf_bytes = await generate_pdf_certificate(
+        institution_name: widget.institution_name,
+        location: widget.location,
+        website: widget.website,
+        logo_image_path: widget.logo_image_path,
+        ribbon_image_path: widget.ribbon_image_path,
+        signature_image_path: widget.signature_image_path,
+        certificate: widget.certificate!,
+        main_color: widget.topbar_color,
+      );
+      setState(() {});
+    });
   }
 
   check_certificate() async {
@@ -96,7 +97,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
                   "certificate_${widget.certificate!.user_name.split(" ").join("_")}_${widget.certificate!.course_name.split(" ").join("_")}_${widget.certificate!.id}.pdf";
 
               FileDownloader.save(
-                base64_string: pdf_base64,
+                base64_string: base64.encode(pdf_bytes!),
                 file_name: file_name,
               );
             },
