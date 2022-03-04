@@ -86,8 +86,6 @@ save_certificate({
 
       String course_name = course_snapshot.get("name");
 
-      print("send_email----");
-
       send_email(
         to: user.email!,
         subject:

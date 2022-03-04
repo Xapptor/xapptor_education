@@ -4,14 +4,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
-import 'package:xapptor_router/app_screens.dart';
 import 'course_certificate.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'generate_pdf_certificate.dart';
+import 'package:xapptor_router/get_current_last_path_segment.dart';
 
-class CertificatesVisualizer extends StatefulWidget {
-  CertificatesVisualizer({
+class CertificateVisualizer extends StatefulWidget {
+  CertificateVisualizer({
     required this.certificate,
     required this.topbar_color,
     required this.institution_name,
@@ -32,10 +32,10 @@ class CertificatesVisualizer extends StatefulWidget {
   final String signature_image_path;
 
   @override
-  _CertificatesVisualizerState createState() => _CertificatesVisualizerState();
+  _CertificateVisualizerState createState() => _CertificateVisualizerState();
 }
 
-class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
+class _CertificateVisualizerState extends State<CertificateVisualizer> {
   String html_string = "";
   Uint8List? pdf_bytes = null;
 
@@ -61,8 +61,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
     if (widget.certificate != null) {
       download_certificate();
     } else {
-      String certificate_id =
-          Uri.parse(app_screens.last.name).pathSegments.last;
+      String certificate_id = get_current_last_path_segment();
 
       widget.certificate = await get_certificate_from_id(
         id: certificate_id,
@@ -114,9 +113,12 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
               ),
             )
           : Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).primaryColor,
+              child: Text(
+                "Loading.. ⏳",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: widget.topbar_color,
                 ),
               ),
             ),

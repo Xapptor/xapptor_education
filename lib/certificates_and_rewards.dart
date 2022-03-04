@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
 import 'package:xapptor_logic/get_user_info.dart';
@@ -102,6 +104,10 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
       if (user_info["products_acquired"].length > 0) {
         courses_id = List.from(user_info["products_acquired"]);
         for (var course_id in courses_id) {
+          Timer(Duration(milliseconds: 2500), () async {
+            user_info = await get_user_info(user_id);
+            get_certificates();
+          });
           check_if_course_was_completed(
             course_id: course_id,
             user_info: user_info,
@@ -198,7 +204,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                   AppScreen(
                                     name:
                                         "home/certificates_and_rewards/$certificate_id",
-                                    child: CertificatesVisualizer(
+                                    child: CertificateVisualizer(
                                       certificate: certificates[i],
                                       topbar_color: widget.topbar_color,
                                       institution_name: widget.institution_name,

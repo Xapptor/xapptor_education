@@ -115,7 +115,7 @@ class _ClassSessionState extends State<ClassSession> {
       original_url.lastIndexOf("/"),
       original_url.length,
     );
-    new_url = "https://www.abeinstitute.com/#/video$video_id";
+    new_url = "https://www.abeinstitute.com/#/videos$video_id";
     return new_url;
   }
 
