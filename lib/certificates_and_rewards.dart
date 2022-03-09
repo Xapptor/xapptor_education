@@ -64,6 +64,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
     "You have no rewards",
   ];
 
+  late Timer get_certificates_timer;
+
   update_text_list({
     required int index,
     required String new_text,
@@ -71,6 +73,12 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   }) {
     text_list[index] = new_text;
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    get_certificates_timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -103,7 +111,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
       if (user_info["products_acquired"].length > 0) {
         courses_id = List.from(user_info["products_acquired"]);
         for (var course_id in courses_id) {
-          Timer(Duration(milliseconds: 2500), () async {
+          get_certificates_timer =
+              Timer(Duration(milliseconds: 2500), () async {
             user_info = await get_user_info(user_id);
             get_certificates();
           });
@@ -224,6 +233,10 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                 child: Container(
                                   padding: padding,
                                   child: ListTile(
+                                    leading: Icon(
+                                      ModernPictograms.article_alt,
+                                      color: widget.topbar_color,
+                                    ),
                                     title: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -257,7 +270,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Text(
                                               'ID: ',
@@ -265,14 +278,15 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            SelectableText(certificates[i].id),
+                                            SelectableText(
+                                              certificates[i].id,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ],
-                                    ),
-                                    leading: Icon(
-                                      ModernPictograms.article_alt,
-                                      color: widget.topbar_color,
                                     ),
                                   ),
                                 ),

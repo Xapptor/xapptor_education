@@ -65,7 +65,7 @@ class _ClassSessionState extends State<ClassSession> {
     required int list_index,
   }) {
     text_list[index] = new_text;
-    //setState(() {});
+    setState(() {});
 
     if (index == (text_list.length - 1)) {
       if (!first_time_updating_text) {
