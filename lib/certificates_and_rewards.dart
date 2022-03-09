@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
 import 'package:xapptor_logic/get_user_info.dart';

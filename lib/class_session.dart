@@ -23,6 +23,7 @@ class ClassSession extends StatefulWidget {
     required this.language_picker,
     required this.text_color,
     required this.topbar_color,
+    required this.website,
   });
 
   final String course_id;
@@ -32,6 +33,7 @@ class ClassSession extends StatefulWidget {
   final bool language_picker;
   final Color text_color;
   final Color topbar_color;
+  final String website;
 
   @override
   _ClassSessionState createState() => _ClassSessionState();
@@ -50,10 +52,12 @@ class _ClassSessionState extends State<ClassSession> {
     "text",
   ];
 
-  String video_url = "https://www.abeinstitute.com/#/privacy_policy";
   bool last_unit = false;
   Map video_urls = {};
   bool first_time_updating_text = true;
+  late SharedPreferences prefs;
+  String webview_id = Uuid().v4();
+  String complete_url = "";
 
   update_text_list({
     required int index,
@@ -61,7 +65,7 @@ class _ClassSessionState extends State<ClassSession> {
     required int list_index,
   }) {
     text_list[index] = new_text;
-    setState(() {});
+    //setState(() {});
 
     if (index == (text_list.length - 1)) {
       if (!first_time_updating_text) {
@@ -115,7 +119,7 @@ class _ClassSessionState extends State<ClassSession> {
       original_url.lastIndexOf("/"),
       original_url.length,
     );
-    new_url = "https://www.abeinstitute.com/#/videos$video_id";
+    new_url = "${widget.website}/videos$video_id";
     return new_url;
   }
 
@@ -124,26 +128,24 @@ class _ClassSessionState extends State<ClassSession> {
       current_language = prefs.getString("target_language")!;
     }
 
-    video_url = generate_video_url_for_current_platform(video_urls[
-        (current_language == "en" || current_language == "es")
-            ? current_language
-            : "en"]);
+    complete_url = generate_video_url_for_current_platform(
+      video_urls[(current_language == "en" || current_language == "es")
+          ? current_language
+          : "en"],
+    );
 
     Timer(Duration(milliseconds: 300), () {
       if (UniversalPlatform.isWeb) {
         setState(() {});
       } else {
-        webview_controller.loadUrl(video_url);
+        webview_controller.loadUrl(complete_url);
       }
     });
   }
 
-  late SharedPreferences prefs;
-
-  String webview_id = Uuid().v4();
-
   @override
   void initState() {
+    complete_url = widget.website;
     super.initState();
     get_texts();
   }
@@ -223,7 +225,7 @@ class _ClassSessionState extends State<ClassSession> {
                 height: MediaQuery.of(context).size.height / 3,
                 width: MediaQuery.of(context).size.width / (portrait ? 1 : 2),
                 child: Webview(
-                  src: video_url,
+                  src: complete_url,
                   id: webview_id,
                   controller_callback: controller_callback,
                 ),

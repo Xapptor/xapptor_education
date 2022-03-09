@@ -249,11 +249,11 @@ Future<Uint8List> generate_pdf_certificate({
                                           flex: 1,
                                           child: PdfUrlText(
                                             text: website +
-                                                "/#/certificates/" +
+                                                "/certificates/" +
                                                 certificate.id,
                                             url: "https://" +
                                                 website +
-                                                "/#/certificates/" +
+                                                "/certificates/" +
                                                 certificate.id,
                                             font_size: 14,
                                           ),

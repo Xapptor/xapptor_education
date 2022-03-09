@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_logic/get_user_info.dart';
@@ -16,12 +15,14 @@ class CoursesList extends StatefulWidget {
     required this.language_picker,
     required this.text_color,
     required this.topbar_color,
+    required this.website,
   });
 
   final Color language_picker_items_text_color;
   final bool language_picker;
   final Color text_color;
   final Color topbar_color;
+  final String website;
 
   @override
   _CoursesListState createState() => _CoursesListState();
@@ -155,13 +156,15 @@ class _CoursesListState extends State<CoursesList> {
                             children: <Widget>[
                               Column(
                                 children: build_expandable_content(
-                                  courses[i],
-                                  context,
-                                  get_courses_and_units,
-                                  widget.language_picker_items_text_color,
-                                  widget.language_picker,
-                                  widget.topbar_color,
-                                  widget.text_color,
+                                  course: courses[i],
+                                  context: context,
+                                  get_courses_and_units: get_courses_and_units,
+                                  language_picker_items_text_color:
+                                      widget.language_picker_items_text_color,
+                                  language_picker: widget.language_picker,
+                                  topbar_color: widget.topbar_color,
+                                  text_color: widget.text_color,
+                                  website: widget.website,
                                 ),
                               ),
                             ],
@@ -193,15 +196,16 @@ class _CoursesListState extends State<CoursesList> {
   }
 }
 
-build_expandable_content(
-  Course course,
-  BuildContext context,
-  Function get_courses_and_units,
-  Color language_picker_items_text_color,
-  bool language_picker,
-  Color topbar_color,
-  Color text_color,
-) {
+build_expandable_content({
+  required Course course,
+  required BuildContext context,
+  required Function get_courses_and_units,
+  required Color language_picker_items_text_color,
+  required bool language_picker,
+  required Color topbar_color,
+  required Color text_color,
+  required String website,
+}) {
   List<Widget> column_content = [];
 
   for (String content in course.contents) {
@@ -211,7 +215,8 @@ build_expandable_content(
         onTap: () async {
           String unit_id = course.unit_ids[content_index];
 
-          if (content_index == 0) {
+          if (content_index == 0 ||
+              course.units_completed_status[content_index - 1]) {
             open_class_session(
               course_id: course.id,
               course_name: course.title,
@@ -221,20 +226,8 @@ build_expandable_content(
               language_picker: language_picker,
               topbar_color: topbar_color,
               text_color: text_color,
+              website: website,
             );
-          } else {
-            if (course.units_completed_status[content_index - 1]) {
-              open_class_session(
-                course_id: course.id,
-                course_name: course.title,
-                unit_id: unit_id,
-                language_picker_items_text_color:
-                    language_picker_items_text_color,
-                language_picker: language_picker,
-                topbar_color: topbar_color,
-                text_color: text_color,
-              );
-            }
           }
         },
         child: ListTile(
@@ -266,6 +259,7 @@ open_class_session({
   required bool language_picker,
   required Color topbar_color,
   required Color text_color,
+  required String website,
 }) {
   add_new_app_screen(
     AppScreen(
@@ -278,6 +272,7 @@ open_class_session({
         language_picker: language_picker,
         topbar_color: topbar_color,
         text_color: text_color,
+        website: website,
       ),
     ),
   );

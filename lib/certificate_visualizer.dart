@@ -9,6 +9,8 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'generate_pdf_certificate.dart';
 import 'package:xapptor_router/get_current_last_path_segment.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart' as http;
 
 class CertificateVisualizer extends StatefulWidget {
   CertificateVisualizer({
@@ -37,29 +39,49 @@ class CertificateVisualizer extends StatefulWidget {
 
 class _CertificateVisualizerState extends State<CertificateVisualizer> {
   String html_string = "";
-  Uint8List? pdf_bytes = null;
+  late Uint8List? pdf_bytes;
+  String pdf_url = "";
+  late Reference storage_ref;
+
+  get_storage_ref() {
+    storage_ref = FirebaseStorage.instance
+        .ref("users")
+        .child(widget.certificate!.user_id)
+        .child("certificates")
+        .child(widget.certificate!.id + ".pdf");
+
+    check_if_file_exist();
+  }
 
   // Download base64 PDF certificate from backend.
 
-  download_certificate() async {
-    Timer(Duration(milliseconds: 500), () async {
-      pdf_bytes = await generate_pdf_certificate(
-        institution_name: widget.institution_name,
-        location: widget.location,
-        website: widget.website,
-        logo_image_path: widget.logo_image_path,
-        ribbon_image_path: widget.ribbon_image_path,
-        signature_image_path: widget.signature_image_path,
-        certificate: widget.certificate!,
-        main_color: widget.topbar_color,
-      );
+  check_if_file_exist() {
+    storage_ref.getDownloadURL().then((url) async {
+      pdf_url = url;
       setState(() {});
+    }).onError((error, stackTrace) async {
+      print(error);
+      Timer(Duration(milliseconds: 500), () async {
+        pdf_bytes = await generate_pdf_certificate(
+          institution_name: widget.institution_name,
+          location: widget.location,
+          website: widget.website,
+          logo_image_path: widget.logo_image_path,
+          ribbon_image_path: widget.ribbon_image_path,
+          signature_image_path: widget.signature_image_path,
+          certificate: widget.certificate!,
+          main_color: widget.topbar_color,
+        );
+        await storage_ref.putData(pdf_bytes!);
+        pdf_url = await storage_ref.getDownloadURL();
+        setState(() {});
+      });
     });
   }
 
   check_certificate() async {
     if (widget.certificate != null) {
-      download_certificate();
+      get_storage_ref();
     } else {
       String certificate_id = get_current_last_path_segment();
 
@@ -67,7 +89,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
         id: certificate_id,
       );
 
-      download_certificate();
+      get_storage_ref();
     }
   }
 
@@ -94,21 +116,29 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
 
               String file_name =
                   "certificate_${widget.certificate!.user_name.split(" ").join("_")}_${widget.certificate!.course_name.split(" ").join("_")}_${widget.certificate!.id}.pdf";
-
-              FileDownloader.save(
-                base64_string: base64.encode(pdf_bytes!),
-                file_name: file_name,
-              );
+              if (UniversalPlatform.isWeb) {
+                FileDownloader.save(
+                  src: pdf_url,
+                  file_name: file_name,
+                );
+              } else {
+                http.get(Uri.parse(pdf_url)).then((response) {
+                  FileDownloader.save(
+                    src: base64.encode(response.bodyBytes),
+                    file_name: file_name,
+                  );
+                });
+              }
             },
           ),
         ],
         custom_leading: null,
         logo_path: "assets/images/logo.png",
       ),
-      body: pdf_bytes != null
+      body: pdf_url != ""
           ? SafeArea(
-              child: SfPdfViewer.memory(
-                pdf_bytes!,
+              child: SfPdfViewer.network(
+                pdf_url,
                 enableDoubleTapZooming: true,
               ),
             )

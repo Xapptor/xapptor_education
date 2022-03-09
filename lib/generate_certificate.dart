@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_logic/get_user_info.dart';
 import 'package:xapptor_logic/send_email.dart';
-
 import 'initialize.dart';
 
 // Check if exist certificate.
@@ -91,7 +90,7 @@ save_certificate({
         subject:
             "${user_info["firstname"]} ${user_info["lastname"]}, $course_name certificate",
         text:
-            "Congratulations ${user_info["firstname"]} ${user_info["lastname"]}, here is your $course_name certificate, ${xapptor_education_options.website}/#/certificates/${new_certificate.id}",
+            "Congratulations ${user_info["firstname"]} ${user_info["lastname"]}, here is your $course_name certificate, ${xapptor_education_options.website}/certificates/${new_certificate.id}",
       )
           .then((value) => {
                 ScaffoldMessenger.of(context).showSnackBar(
