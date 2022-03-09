@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:xapptor_logic/check_limit_per_date.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'course_certificate.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -42,6 +44,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
   late Uint8List? pdf_bytes;
   String pdf_url = "";
   late Reference storage_ref;
+  late Timer generate_pdf_timer;
 
   get_storage_ref() {
     storage_ref = FirebaseStorage.instance
@@ -53,30 +56,32 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
     check_if_file_exist();
   }
 
-  // Download base64 PDF certificate from backend.
-
   check_if_file_exist() {
     storage_ref.getDownloadURL().then((url) async {
       pdf_url = url;
       setState(() {});
     }).onError((error, stackTrace) async {
       print(error);
-      Timer(Duration(milliseconds: 500), () async {
-        pdf_bytes = await generate_pdf_certificate(
-          institution_name: widget.institution_name,
-          location: widget.location,
-          website: widget.website,
-          logo_image_path: widget.logo_image_path,
-          ribbon_image_path: widget.ribbon_image_path,
-          signature_image_path: widget.signature_image_path,
-          certificate: widget.certificate!,
-          main_color: widget.topbar_color,
-        );
-        await storage_ref.putData(pdf_bytes!);
-        pdf_url = await storage_ref.getDownloadURL();
-        setState(() {});
+      generate_pdf_timer = Timer(Duration(milliseconds: 500), () async {
+        generate_pdf();
       });
     });
+  }
+
+  generate_pdf() async {
+    pdf_bytes = await generate_pdf_certificate(
+      institution_name: widget.institution_name,
+      location: widget.location,
+      website: widget.website,
+      logo_image_path: widget.logo_image_path,
+      ribbon_image_path: widget.ribbon_image_path,
+      signature_image_path: widget.signature_image_path,
+      certificate: widget.certificate!,
+      main_color: widget.topbar_color,
+    );
+    await storage_ref.putData(pdf_bytes!);
+    pdf_url = await storage_ref.getDownloadURL();
+    setState(() {});
   }
 
   check_certificate() async {
@@ -100,38 +105,79 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
   }
 
   @override
+  void dispose() {
+    generate_pdf_timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
         background_color: widget.topbar_color,
         has_back_button: true,
-        actions: [
-          IconButton(
-            icon: Icon(
-              UniversalPlatform.isWeb ? Icons.download_rounded : Icons.share,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              // Download PDF certificate file.
+        actions: pdf_url.isNotEmpty
+            ? [
+                IconButton(
+                  icon: Icon(
+                    UniversalPlatform.isWeb
+                        ? Icons.download_rounded
+                        : Icons.share,
+                    color: Colors.white,
+                  ),
+                  onPressed: () async {
+                    // Download PDF certificate file.
+                    String file_name =
+                        "certificate_${widget.certificate!.user_name.split(" ").join("_")}_${widget.certificate!.course_name.split(" ").join("_")}_${widget.certificate!.id}.pdf";
 
-              String file_name =
-                  "certificate_${widget.certificate!.user_name.split(" ").join("_")}_${widget.certificate!.course_name.split(" ").join("_")}_${widget.certificate!.id}.pdf";
-              if (UniversalPlatform.isWeb) {
-                FileDownloader.save(
-                  src: pdf_url,
-                  file_name: file_name,
-                );
-              } else {
-                http.get(Uri.parse(pdf_url)).then((response) {
-                  FileDownloader.save(
-                    src: base64.encode(response.bodyBytes),
-                    file_name: file_name,
-                  );
-                });
-              }
-            },
-          ),
-        ],
+                    if (UniversalPlatform.isWeb) {
+                      FileDownloader.save(
+                        src: pdf_url,
+                        file_name: file_name,
+                      );
+                    } else {
+                      http.get(Uri.parse(pdf_url)).then((response) {
+                        FileDownloader.save(
+                          src: base64.encode(response.bodyBytes),
+                          file_name: file_name,
+                        );
+                      });
+                    }
+                  },
+                ),
+                FirebaseAuth.instance.currentUser != null
+                    ? FirebaseAuth.instance.currentUser!.uid ==
+                            widget.certificate!.user_id
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.autorenew,
+                              color: Colors.white,
+                            ),
+                            onPressed: () async {
+                              check_limit_per_date(
+                                new_value: widget.certificate!.id,
+                                context: context,
+                                reached_limit_alert_title:
+                                    "Max certificates generated per day!",
+                                check_limit_per_date_callback: () {
+                                  pdf_url = "";
+                                  setState(() {});
+                                  generate_pdf();
+                                },
+                                cache_lifetime_in_seconds:
+                                    Duration.secondsPerDay * 5,
+                                limit: 5,
+                                limit_field_name: "generate_certificate_limit",
+                                array_field_name: "certificates",
+                                reach_limit: ReachLimit.by_day,
+                                save_same_value_multiple_times: true,
+                              );
+                            },
+                          )
+                        : Container()
+                    : Container(),
+              ]
+            : [],
         custom_leading: null,
         logo_path: "assets/images/logo.png",
       ),
@@ -139,7 +185,6 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
           ? SafeArea(
               child: SfPdfViewer.network(
                 pdf_url,
-                enableDoubleTapZooming: true,
               ),
             )
           : Center(
