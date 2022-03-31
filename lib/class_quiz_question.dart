@@ -1,4 +1,5 @@
-import 'package:xapptor_translation/translate.dart';
+import 'package:xapptor_translation/model/text_list.dart';
+import 'package:xapptor_translation/translation_stream.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
@@ -36,11 +37,16 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
   late TranslationStream translation_stream;
   List<TranslationStream> translation_stream_list = [];
 
-  List<String> text_list = [
-    "Text",
-    "Text",
-    "Text",
-  ];
+  TranslationTextListArray text_list = TranslationTextListArray([
+    TranslationTextList(
+      source_language: "en",
+      text_list: [
+        "Text",
+        "Text",
+        "Text",
+      ],
+    ),
+  ]);
 
   List<String> answers_list = [];
 
@@ -53,12 +59,21 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
     setState(() {});
   }
 
+  int source_language_index = 0;
+
+  update_source_language({
+    required int new_source_language_index,
+  }) {
+    source_language_index = new_source_language_index;
+    setState(() {});
+  }
+
   update_text_list({
     required int index,
     required String new_text,
     required int list_index,
   }) {
-    text_list[index] = new_text;
+    text_list.get(source_language_index)[index] = new_text;
     setState(() {});
   }
 
@@ -66,24 +81,25 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
   void initState() {
     super.initState();
 
-    text_list = [
+    text_list.translation_text_list_array[0].text_list = [
       widget.question_title,
       "Validate",
       widget.correct_answer,
     ];
 
     for (int i = 0; i < widget.answers.length; i++) {
-      text_list.add(widget.answers[i].toString());
+      text_list.translation_text_list_array[0].text_list
+          .add(widget.answers[i].toString());
       answers_list.add(widget.answers[i].toString());
     }
 
     setState(() {});
 
     translation_stream = TranslationStream(
-      text_list: text_list,
+      translation_text_list_array: text_list,
       update_text_list_function: update_text_list,
       list_index: 0,
-      active_translation: true,
+      source_language_index: source_language_index,
     );
     translation_stream_list = [translation_stream];
 
@@ -103,7 +119,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
             child: Container(
               width: portrait ? 300 : 700,
               child: AutoSizeText(
-                text_list[0],
+                text_list.get(source_language_index)[0],
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: Colors.black,
@@ -134,10 +150,12 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                   FractionallySizedBox(
                 widthFactor: portrait ? 0.85 : 0.4,
                 child: ClassQuizAnswerItem(
-                  answer_text: text_list.length >= (index + 4)
+                  answer_text: text_list.translation_text_list_array[0]
+                              .text_list.length >=
+                          (index + 4)
                       ? answers_list[index].contains("http")
                           ? answers_list[index]
-                          : text_list[index + 3]
+                          : text_list.get(source_language_index)[index + 3]
                       : "",
                   index: index,
                   class_quiz_question: this,
@@ -167,14 +185,15 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                 border_radius: 1000,
                 on_pressed: () {
                   bool answer_is_correct =
-                      text_list[current_index + 3] == text_list[2];
+                      text_list.get(source_language_index)[current_index + 3] ==
+                          text_list.get(source_language_index)[2];
 
                   widget.class_quiz
                       .get_next_question(answer_is_correct, widget.question_id);
                 },
                 child: Center(
                   child: Text(
-                    text_list[1],
+                    text_list.get(source_language_index)[1],
                     style: TextStyle(
                       color: Colors.white,
                     ),

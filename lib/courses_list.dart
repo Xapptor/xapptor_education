@@ -3,7 +3,8 @@ import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_logic/get_user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_translation/translate.dart';
+import 'package:xapptor_translation/model/text_list.dart';
+import 'package:xapptor_translation/translation_stream.dart';
 import 'class_session.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,16 +35,31 @@ class _CoursesListState extends State<CoursesList> {
   List<Course> courses = <Course>[];
   Map<String, dynamic> user_info = {};
 
-  List<String> text_list = ["You don't have courses"];
+  TranslationTextListArray text_list = TranslationTextListArray([
+    TranslationTextList(
+      source_language: "en",
+      text_list: ["You don't have courses"],
+    ),
+  ]);
+
   late TranslationStream translation_stream;
   List<TranslationStream> translation_stream_list = [];
+
+  int source_language_index = 0;
+
+  update_source_language({
+    required int new_source_language_index,
+  }) {
+    source_language_index = new_source_language_index;
+    setState(() {});
+  }
 
   update_text_list({
     required int index,
     required String new_text,
     required int list_index,
   }) {
-    text_list[index] = new_text;
+    text_list.get(source_language_index)[index] = new_text;
     setState(() {});
   }
 
@@ -106,10 +122,10 @@ class _CoursesListState extends State<CoursesList> {
     get_courses_and_units();
 
     translation_stream = TranslationStream(
-      text_list: text_list,
+      translation_text_list_array: text_list,
       update_text_list_function: update_text_list,
       list_index: 0,
-      active_translation: true,
+      source_language_index: source_language_index,
     );
 
     translation_stream_list = [
@@ -177,7 +193,7 @@ class _CoursesListState extends State<CoursesList> {
               )
             : Center(
                 child: Text(
-                  text_list[0],
+                  text_list.get(source_language_index)[0],
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,

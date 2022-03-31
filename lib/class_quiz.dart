@@ -1,5 +1,6 @@
 import 'dart:math';
-import 'package:xapptor_translation/translate.dart';
+import 'package:xapptor_translation/model/text_list.dart';
+import 'package:xapptor_translation/translation_stream.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'class_quiz_question.dart';
@@ -38,11 +39,25 @@ class ClassQuiz extends StatefulWidget {
 class _ClassQuizState extends State<ClassQuiz> {
   String user_id = "";
 
-  List<String> text_list = [
-    "Lives:",
-    "Progress:",
-    "Continue",
-  ];
+  int source_language_index = 0;
+
+  update_source_language({
+    required int new_source_language_index,
+  }) {
+    source_language_index = new_source_language_index;
+    setState(() {});
+  }
+
+  TranslationTextListArray text_list = TranslationTextListArray([
+    TranslationTextList(
+      source_language: "en",
+      text_list: [
+        "Lives:",
+        "Progress:",
+        "Continue",
+      ],
+    ),
+  ]);
 
   late TranslationStream translation_stream;
   List<TranslationStream> translation_stream_list = [];
@@ -70,6 +85,7 @@ class _ClassQuizState extends State<ClassQuiz> {
                 translation_stream_list: translation_stream_list,
                 language_picker_items_text_color:
                     widget.language_picker_items_text_color,
+                update_source_language: update_source_language,
               )
             : Container(),
       ),
@@ -146,16 +162,16 @@ class _ClassQuizState extends State<ClassQuiz> {
       }
 
       translation_stream = TranslationStream(
-        text_list: text_list,
+        translation_text_list_array: text_list,
         update_text_list_function: update_text_list,
         list_index: 0,
-        active_translation: true,
+        source_language_index: source_language_index,
       );
       translation_stream_list = [translation_stream];
 
       widgets_list.add(
         ClassQuizResult(
-          button_text: text_list[2],
+          button_text: text_list.get(source_language_index)[2],
           class_quiz: this,
           text_color: widget.text_color,
         ),
@@ -170,7 +186,7 @@ class _ClassQuizState extends State<ClassQuiz> {
     required String new_text,
     required int list_index,
   }) {
-    text_list[index] = new_text;
+    text_list.get(source_language_index)[index] = new_text;
     setState(() {});
   }
 
@@ -248,7 +264,7 @@ class _ClassQuizState extends State<ClassQuiz> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    String progress_text = text_list[1] +
+    String progress_text = text_list.get(source_language_index)[1] +
         " " +
         (percentage_progress.toString().length > 4
             ? percentage_progress
@@ -283,7 +299,9 @@ class _ClassQuizState extends State<ClassQuiz> {
                         bottom: 15,
                       ),
                       child: Text(
-                        text_list[0] + " " + lives.toString(),
+                        text_list.get(source_language_index)[0] +
+                            " " +
+                            lives.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,

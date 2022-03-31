@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:xapptor_translation/translate.dart';
+import 'package:xapptor_translation/model/text_list.dart';
+import 'package:xapptor_translation/translation_stream.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -44,13 +45,18 @@ class _ClassSessionState extends State<ClassSession> {
   late TranslationStream translation_stream;
   List<TranslationStream> translation_stream_list = [];
 
-  List<String> text_list = [
-    "text",
-    "text",
-    "text",
-    "text",
-    "text",
-  ];
+  TranslationTextListArray text_list = TranslationTextListArray([
+    TranslationTextList(
+      source_language: "en",
+      text_list: [
+        "text",
+        "text",
+        "text",
+        "text",
+        "text",
+      ],
+    ),
+  ]);
 
   bool last_unit = false;
   Map video_urls = {};
@@ -59,15 +65,25 @@ class _ClassSessionState extends State<ClassSession> {
   String webview_id = Uuid().v4();
   String complete_url = "";
 
+  int source_language_index = 0;
+
+  update_source_language({
+    required int new_source_language_index,
+  }) {
+    source_language_index = new_source_language_index;
+    setState(() {});
+  }
+
   update_text_list({
     required int index,
     required String new_text,
     required int list_index,
   }) {
-    text_list[index] = new_text;
+    text_list.get(source_language_index)[index] = new_text;
     setState(() {});
 
-    if (index == (text_list.length - 1)) {
+    if (index ==
+        (text_list.translation_text_list_array[0].text_list.length - 1)) {
       if (!first_time_updating_text) {
         Timer(Duration(milliseconds: 300), () {
           set_video_url();
@@ -88,7 +104,7 @@ class _ClassSessionState extends State<ClassSession> {
         .doc(widget.unit_id)
         .get()
         .then((DocumentSnapshot doc_snap) {
-      text_list = [
+      text_list.translation_text_list_array[0].text_list = [
         doc_snap.get("title"),
         doc_snap.get("subtitle"),
         doc_snap.get("description"),
@@ -100,10 +116,10 @@ class _ClassSessionState extends State<ClassSession> {
       last_unit = doc_snap.get('last_unit');
 
       translation_stream = TranslationStream(
-        text_list: text_list,
+        translation_text_list_array: text_list,
         update_text_list_function: update_text_list,
         list_index: 0,
-        active_translation: true,
+        source_language_index: source_language_index,
       );
       translation_stream_list = [translation_stream];
 
@@ -171,6 +187,7 @@ class _ClassSessionState extends State<ClassSession> {
             child: LanguagePicker(
               translation_stream_list: translation_stream_list,
               language_picker_items_text_color: widget.text_color,
+              update_source_language: update_source_language,
             ),
           ),
         ],
@@ -192,7 +209,9 @@ class _ClassSessionState extends State<ClassSession> {
                       height: sized_box_space * 4,
                     ),
                     AutoSizeText(
-                      text_list[0] + " - " + text_list[1],
+                      text_list.get(source_language_index)[0] +
+                          " - " +
+                          text_list.get(source_language_index)[1],
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.black,
@@ -207,7 +226,7 @@ class _ClassSessionState extends State<ClassSession> {
                       height: sized_box_space * 2,
                     ),
                     SelectableText(
-                      text_list[2],
+                      text_list.get(source_language_index)[2],
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.black,
@@ -238,7 +257,7 @@ class _ClassSessionState extends State<ClassSession> {
                       height: sized_box_space * 2,
                     ),
                     SelectableText(
-                      text_list[3],
+                      text_list.get(source_language_index)[3],
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.black,
@@ -280,7 +299,7 @@ class _ClassSessionState extends State<ClassSession> {
                         },
                         child: Center(
                           child: Text(
-                            text_list[4],
+                            text_list.get(source_language_index)[4],
                             style: TextStyle(
                               color: Colors.white,
                             ),

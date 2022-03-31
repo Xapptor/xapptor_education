@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
 import 'package:xapptor_logic/get_user_info.dart';
-import 'package:xapptor_translation/translate.dart';
+import 'package:xapptor_translation/model/text_list.dart';
+import 'package:xapptor_translation/translation_stream.dart';
 import 'course_certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
@@ -58,20 +59,35 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
 
   late TranslationStream translation_stream;
   List<TranslationStream> translation_stream_list = [];
-  List<String> text_list = [
-    "Certificates",
-    "Rewards",
-    "You have no rewards",
-  ];
+
+  TranslationTextListArray text_list = TranslationTextListArray([
+    TranslationTextList(
+      source_language: "en",
+      text_list: [
+        "Certificates",
+        "Rewards",
+        "You have no rewards",
+      ],
+    ),
+  ]);
 
   late Timer get_certificates_timer;
+
+  int source_language_index = 0;
+
+  update_source_language({
+    required int new_source_language_index,
+  }) {
+    source_language_index = new_source_language_index;
+    setState(() {});
+  }
 
   update_text_list({
     required int index,
     required String new_text,
     required int list_index,
   }) {
-    text_list[index] = new_text;
+    text_list.get(source_language_index)[index] = new_text;
     setState(() {});
   }
 
@@ -86,10 +102,10 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
     super.initState();
 
     translation_stream = TranslationStream(
-      text_list: text_list,
+      translation_text_list_array: text_list,
       update_text_list_function: update_text_list,
       list_index: 0,
-      active_translation: true,
+      source_language_index: source_language_index,
     );
     translation_stream_list = [translation_stream];
 
@@ -165,6 +181,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             child: LanguagePicker(
               translation_stream_list: translation_stream_list,
               language_picker_items_text_color: widget.text_color,
+              update_source_language: update_source_language,
             ),
           ),
         ],
@@ -177,7 +194,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
         bottom_bar_buttons: [
           BottomBarButton(
             icon: ModernPictograms.article_alt,
-            text: text_list[0],
+            text: text_list.get(source_language_index)[0],
             foreground_color: Colors.white,
             background_color: widget.button_color_1,
             page: certificates.isEmpty
@@ -300,11 +317,11 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
           ),
           BottomBarButton(
             icon: FontAwesome5.gift,
-            text: text_list[1],
+            text: text_list.get(source_language_index)[1],
             foreground_color: Colors.white,
             background_color: widget.button_color_2,
             page: ComingSoonContainer(
-              text: text_list[2],
+              text: text_list.get(source_language_index)[2],
               enable_cover: true,
             ),
           ),
