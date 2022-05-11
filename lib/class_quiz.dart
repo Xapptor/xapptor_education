@@ -71,7 +71,6 @@ class _ClassQuizState extends State<ClassQuiz> {
 
   int current_page = 0;
   List<Widget> widgets_list = <Widget>[];
-  String html_certificate = "";
 
   // Topbar widgets action.
 
@@ -95,14 +94,6 @@ class _ClassQuizState extends State<ClassQuiz> {
   // Retrieving quiz data.
 
   get_quiz_data(String unit_id) {
-    FirebaseFirestore.instance
-        .collection('templates')
-        .doc("certificate")
-        .get()
-        .then((DocumentSnapshot doc_snap) {
-      html_certificate = doc_snap.get("html");
-    });
-
     FirebaseFirestore.instance
         .collection('quizzes')
         .doc(unit_id)
@@ -256,6 +247,15 @@ class _ClassQuizState extends State<ClassQuiz> {
   @override
   void initState() {
     super.initState();
+
+    translation_stream = TranslationStream(
+      translation_text_list_array: text_list,
+      update_text_list_function: update_text_list,
+      list_index: 0,
+      source_language_index: source_language_index,
+    );
+    translation_stream_list = [translation_stream];
+
     user_id = FirebaseAuth.instance.currentUser!.uid;
     get_quiz_data(widget.unit_id);
   }

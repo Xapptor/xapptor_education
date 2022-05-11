@@ -44,7 +44,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
   late Uint8List? pdf_bytes;
   String pdf_url = "";
   late Reference storage_ref;
-  late Timer generate_pdf_timer;
+  Timer? generate_pdf_timer;
 
   get_storage_ref() {
     storage_ref = FirebaseStorage.instance
@@ -106,7 +106,9 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
 
   @override
   void dispose() {
-    generate_pdf_timer.cancel();
+    if (generate_pdf_timer != null) {
+      generate_pdf_timer!.cancel();
+    }
     super.dispose();
   }
 

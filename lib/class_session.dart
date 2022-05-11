@@ -45,18 +45,20 @@ class _ClassSessionState extends State<ClassSession> {
   late TranslationStream translation_stream;
   List<TranslationStream> translation_stream_list = [];
 
-  TranslationTextListArray text_list = TranslationTextListArray([
-    TranslationTextList(
-      source_language: "en",
-      text_list: [
-        "text",
-        "text",
-        "text",
-        "text",
-        "text",
-      ],
-    ),
-  ]);
+  TranslationTextListArray text_list = TranslationTextListArray(
+    [
+      TranslationTextList(
+        source_language: "en",
+        text_list: [
+          "text",
+          "text",
+          "text",
+          "text",
+          "text",
+        ],
+      ),
+    ],
+  );
 
   bool last_unit = false;
   Map video_urls = {};
@@ -82,8 +84,7 @@ class _ClassSessionState extends State<ClassSession> {
     text_list.get(source_language_index)[index] = new_text;
     setState(() {});
 
-    if (index ==
-        (text_list.translation_text_list_array[0].text_list.length - 1)) {
+    if (index == (text_list.list[0].text_list.length - 1)) {
       if (!first_time_updating_text) {
         Timer(Duration(milliseconds: 300), () {
           set_video_url();
@@ -104,7 +105,7 @@ class _ClassSessionState extends State<ClassSession> {
         .doc(widget.unit_id)
         .get()
         .then((DocumentSnapshot doc_snap) {
-      text_list.translation_text_list_array[0].text_list = [
+      text_list.list[0].text_list = [
         doc_snap.get("title"),
         doc_snap.get("subtitle"),
         doc_snap.get("description"),
@@ -163,6 +164,15 @@ class _ClassSessionState extends State<ClassSession> {
   void initState() {
     complete_url = widget.website;
     super.initState();
+
+    translation_stream = TranslationStream(
+      translation_text_list_array: text_list,
+      update_text_list_function: update_text_list,
+      list_index: 0,
+      source_language_index: source_language_index,
+    );
+    translation_stream_list = [translation_stream];
+
     get_texts();
   }
 

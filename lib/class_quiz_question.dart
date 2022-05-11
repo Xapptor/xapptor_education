@@ -37,16 +37,18 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
   late TranslationStream translation_stream;
   List<TranslationStream> translation_stream_list = [];
 
-  TranslationTextListArray text_list = TranslationTextListArray([
-    TranslationTextList(
-      source_language: "en",
-      text_list: [
-        "Text",
-        "Text",
-        "Text",
-      ],
-    ),
-  ]);
+  TranslationTextListArray text_list = TranslationTextListArray(
+    [
+      TranslationTextList(
+        source_language: "en",
+        text_list: [
+          "Text",
+          "Text",
+          "Text",
+        ],
+      ),
+    ],
+  );
 
   List<String> answers_list = [];
 
@@ -81,19 +83,16 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
   void initState() {
     super.initState();
 
-    text_list.translation_text_list_array[0].text_list = [
+    text_list.list[0].text_list = [
       widget.question_title,
       "Validate",
       widget.correct_answer,
     ];
 
     for (int i = 0; i < widget.answers.length; i++) {
-      text_list.translation_text_list_array[0].text_list
-          .add(widget.answers[i].toString());
+      text_list.list[0].text_list.add(widget.answers[i].toString());
       answers_list.add(widget.answers[i].toString());
     }
-
-    setState(() {});
 
     translation_stream = TranslationStream(
       translation_text_list_array: text_list,
@@ -150,9 +149,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                   FractionallySizedBox(
                 widthFactor: portrait ? 0.85 : 0.4,
                 child: ClassQuizAnswerItem(
-                  answer_text: text_list.translation_text_list_array[0]
-                              .text_list.length >=
-                          (index + 4)
+                  answer_text: text_list.list[0].text_list.length >= (index + 4)
                       ? answers_list[index].contains("http")
                           ? answers_list[index]
                           : text_list.get(source_language_index)[index + 3]
