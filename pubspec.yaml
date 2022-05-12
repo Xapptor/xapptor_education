@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cloud_firestore: ^3.1.10
-  firebase_auth: ^3.3.7
+  cloud_firestore: ^3.1.14
+  firebase_auth: ^3.3.17
   firebase_storage: ^10.2.15
 
   auto_size_text_pk: ^3.0.0
