@@ -13,6 +13,7 @@ import 'generate_pdf_certificate.dart';
 import 'package:xapptor_router/get_current_last_path_segment.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttericon/font_awesome_icons.dart';
 
 class CertificateVisualizer extends StatefulWidget {
   CertificateVisualizer({
@@ -122,9 +123,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
             ? [
                 IconButton(
                   icon: Icon(
-                    UniversalPlatform.isWeb
-                        ? Icons.download_rounded
-                        : Icons.share,
+                    FontAwesome.download,
                     color: Colors.white,
                   ),
                   onPressed: () async {
