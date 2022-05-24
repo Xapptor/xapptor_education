@@ -274,6 +274,7 @@ class _ClassQuizState extends State<ClassQuiz> {
 
     return Scaffold(
       appBar: TopBar(
+        context: context,
         background_color: widget.topbar_color,
         has_back_button: true,
         actions: widgets_action(portrait),

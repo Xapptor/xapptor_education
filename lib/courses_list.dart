@@ -141,6 +141,7 @@ class _CoursesListState extends State<CoursesList> {
       onWillPop: () async => true,
       child: Scaffold(
         appBar: TopBar(
+          context: context,
           background_color: widget.text_color,
           has_back_button: true,
           actions: [],

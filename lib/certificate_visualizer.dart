@@ -117,6 +117,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
+        context: context,
         background_color: widget.topbar_color,
         has_back_button: true,
         actions: pdf_url.isNotEmpty

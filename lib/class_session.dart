@@ -188,6 +188,7 @@ class _ClassSessionState extends State<ClassSession> {
 
     return Scaffold(
       appBar: TopBar(
+        context: context,
         background_color: widget.topbar_color,
         has_back_button: true,
         actions: [
