@@ -8,7 +8,7 @@ import 'package:xapptor_translation/translation_stream.dart';
 import 'class_session.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class CoursesList extends StatefulWidget {
   const CoursesList({

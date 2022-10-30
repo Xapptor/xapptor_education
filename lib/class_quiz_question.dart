@@ -4,7 +4,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'class_quiz_answer_item.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class ClassQuizQuestion extends StatefulWidget {
   const ClassQuizQuestion({

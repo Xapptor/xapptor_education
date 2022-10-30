@@ -16,7 +16,7 @@ import 'package:xapptor_translation/language_picker.dart';
 import 'certificate_visualizer.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'generate_certificate.dart';
 
 class CertificatesAndRewards extends StatefulWidget {

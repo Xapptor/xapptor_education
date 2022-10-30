@@ -8,7 +8,7 @@ import 'class_quiz_result.dart';
 import 'package:xapptor_translation/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'generate_certificate.dart';
 
 class ClassQuiz extends StatefulWidget {
