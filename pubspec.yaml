@@ -20,8 +20,7 @@ dependencies:
   universal_platform: ^1.0.0+1
   http: ^0.13.3
   shared_preferences: ^2.0.15
-  fluttericon: ^2.0.0
-  syncfusion_flutter_pdfviewer: ^19.4.54-beta
+  syncfusion_flutter_pdfviewer: ^20.4.48
   pdf: ^3.7.1
   printing: ^5.7.2
 

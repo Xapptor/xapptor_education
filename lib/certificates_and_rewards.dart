@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/modern_pictograms_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:xapptor_logic/get_user_info.dart';
 import 'package:xapptor_translation/model/text_list.dart';
 import 'package:xapptor_translation/translation_stream.dart';
@@ -194,7 +193,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
         initial_page: 0,
         bottom_bar_buttons: [
           BottomBarButton(
-            icon: ModernPictograms.article_alt,
+            icon: FontAwesomeIcons.newspaper,
             text: text_list.get(source_language_index)[0],
             foreground_color: Colors.white,
             background_color: widget.button_color_1,
@@ -252,7 +251,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                   padding: padding,
                                   child: ListTile(
                                     leading: Icon(
-                                      ModernPictograms.article_alt,
+                                      FontAwesomeIcons.newspaper,
                                       color: widget.topbar_color,
                                     ),
                                     title: Column(
@@ -317,7 +316,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                   ),
           ),
           BottomBarButton(
-            icon: FontAwesome5.gift,
+            icon: FontAwesomeIcons.gift,
             text: text_list.get(source_language_index)[1],
             foreground_color: Colors.white,
             background_color: widget.button_color_2,
