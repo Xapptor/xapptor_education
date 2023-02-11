@@ -41,7 +41,7 @@ Future<CourseCertificate> get_certificate_from_id({
 
   return CourseCertificate(
     id: id,
-    date: timestamp_to_date(certificate_snap.get("date")),
+    date: timestamp_to_date_string(certificate_snap.get("date")),
     course_name: course_snap.get("name"),
     user_name: user_name!,
     user_id: certificate_snap.get("user_id"),
