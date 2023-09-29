@@ -4,8 +4,7 @@ repository: https://github.com/Xapptor/xapptor_education
 version: 0.0.2
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0"
+  sdk: '>=3.1.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -18,11 +17,11 @@ dependencies:
   auto_size_text_pk: ^3.0.0
   uuid: ^3.0.6
   universal_platform: ^1.0.0+1
-  http: ^0.13.3
+  http: ^1.1.0
   shared_preferences: ^2.0.15
-  syncfusion_flutter_pdfviewer: ^20.4.44
+  syncfusion_flutter_pdfviewer: ^23.1.38
   pdf: ^3.7.1
-  printing: ^5.7.2
+  printing: ^5.11.0
 
   # xapptor_logic: ^0.0.3
   # xapptor_router: ^0.0.2
