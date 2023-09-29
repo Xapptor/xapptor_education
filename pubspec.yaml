@@ -15,12 +15,12 @@ dependencies:
   firebase_storage: ^11.2.7
 
   auto_size_text_pk: ^3.0.0
-  uuid: ^3.0.6
+  uuid: ^3.0.7
   universal_platform: ^1.0.0+1
   http: ^1.1.0
-  shared_preferences: ^2.0.15
+  shared_preferences: ^2.2.1
   syncfusion_flutter_pdfviewer: ^23.1.38
-  pdf: ^3.7.1
+  pdf: ^3.10.4
   printing: ^5.11.0
 
   # xapptor_logic: ^0.0.3
