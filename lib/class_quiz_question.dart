@@ -7,7 +7,7 @@ import 'class_quiz_answer_item.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class ClassQuizQuestion extends StatefulWidget {
-  const ClassQuizQuestion({
+  const ClassQuizQuestion({super.key, 
     required this.question_title,
     required this.answers,
     required this.demos,
@@ -112,15 +112,15 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
     return Container(
       child: Column(
         children: <Widget>[
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
           Expanded(
             flex: 3,
-            child: Container(
+            child: SizedBox(
               width: portrait ? 300 : 700,
               child: AutoSizeText(
                 text_list.get(source_language_index)[0],
                 textAlign: TextAlign.left,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -160,17 +160,17 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                   background_color: widget.answers.length > 2
                       ? (index % 2 == 0)
                           ? Colors.white
-                          : Color(0xffe4eded)
+                          : const Color(0xffe4eded)
                       : Colors.white,
                   text_color: widget.text_color,
                 ),
               ),
             ),
           ),
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
           Expanded(
             flex: 1,
-            child: Container(
+            child: SizedBox(
               width: 200,
               child: CustomCard(
                 linear_gradient: LinearGradient(
@@ -191,7 +191,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                 child: Center(
                   child: Text(
                     text_list.get(source_language_index)[1],
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -199,7 +199,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
               ),
             ),
           ),
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
         ],
       ),
     );

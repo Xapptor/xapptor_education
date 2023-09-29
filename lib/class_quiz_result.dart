@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class ClassQuizResult extends StatefulWidget {
-  const ClassQuizResult({
+  const ClassQuizResult({super.key, 
     required this.button_text,
     required this.class_quiz,
     required this.text_color,
@@ -22,7 +22,7 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
     return Container(
       child: Column(
         children: <Widget>[
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
           Expanded(
             flex: 14,
             child: Center(
@@ -35,10 +35,10 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
               ),
             ),
           ),
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
           Expanded(
             flex: 1,
-            child: Container(
+            child: SizedBox(
               width: 200,
               child: CustomCard(
                 linear_gradient: LinearGradient(
@@ -59,7 +59,7 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
                 child: Center(
                   child: Text(
                     widget.button_text,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -67,7 +67,7 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
               ),
             ),
           ),
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
         ],
       ),
     );

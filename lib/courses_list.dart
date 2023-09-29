@@ -8,10 +8,9 @@ import 'package:xapptor_translation/translation_stream.dart';
 import 'class_session.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class CoursesList extends StatefulWidget {
-  const CoursesList({
+  const CoursesList({super.key, 
     required this.language_picker_items_text_color,
     required this.language_picker,
     required this.text_color,
@@ -74,18 +73,14 @@ class _CoursesListState extends State<CoursesList> {
         products_acquired = List.from(user_info["products_acquired"]);
 
         for (int i = 0; i < products_acquired.length; i++) {
-          DocumentSnapshot firestore_course = await FirebaseFirestore.instance
-              .collection("courses")
-              .doc(products_acquired[i])
-              .get();
+          DocumentSnapshot firestore_course =
+              await FirebaseFirestore.instance.collection("courses").doc(products_acquired[i]).get();
 
           List<String> units = List.from(firestore_course.get("units"));
 
-          List<String> units_name = List<String>.generate(
-              units.length, (counter) => "Unit ${counter + 1}");
+          List<String> units_name = List<String>.generate(units.length, (counter) => "Unit ${counter + 1}");
 
-          List<bool> units_completed_status =
-              List<bool>.generate(units.length, (counter) => false);
+          List<bool> units_completed_status = List<bool>.generate(units.length, (counter) => false);
 
           for (int i = 0; i < units.length; i++) {
             if (user_info["units_completed"] != null) {
@@ -135,8 +130,6 @@ class _CoursesListState extends State<CoursesList> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = is_portrait(context);
-
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
@@ -148,7 +141,7 @@ class _CoursesListState extends State<CoursesList> {
           custom_leading: null,
           logo_path: "assets/images/logo.png",
         ),
-        body: courses.length > 0
+        body: courses.isNotEmpty
             ? Align(
                 alignment: Alignment.bottomCenter,
                 child: FractionallySizedBox(
@@ -163,7 +156,7 @@ class _CoursesListState extends State<CoursesList> {
                             backgroundColor: Colors.grey[100],
                             title: Text(
                               courses[i].title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
                                 fontStyle: FontStyle.italic,
@@ -176,8 +169,7 @@ class _CoursesListState extends State<CoursesList> {
                                   course: courses[i],
                                   context: context,
                                   get_courses_and_units: get_courses_and_units,
-                                  language_picker_items_text_color:
-                                      widget.language_picker_items_text_color,
+                                  language_picker_items_text_color: widget.language_picker_items_text_color,
                                   language_picker: widget.language_picker,
                                   topbar_color: widget.topbar_color,
                                   text_color: widget.text_color,
@@ -195,7 +187,7 @@ class _CoursesListState extends State<CoursesList> {
             : Center(
                 child: Text(
                   text_list.get(source_language_index)[0],
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -232,14 +224,12 @@ build_expandable_content({
         onTap: () async {
           String unit_id = course.unit_ids[content_index];
 
-          if (content_index == 0 ||
-              course.units_completed_status[content_index - 1]) {
+          if (content_index == 0 || course.units_completed_status[content_index - 1]) {
             open_class_session(
               course_id: course.id,
               course_name: course.title,
               unit_id: unit_id,
-              language_picker_items_text_color:
-                  language_picker_items_text_color,
+              language_picker_items_text_color: language_picker_items_text_color,
               language_picker: language_picker,
               topbar_color: topbar_color,
               text_color: text_color,
@@ -250,13 +240,11 @@ build_expandable_content({
         child: ListTile(
           title: Text(
             content,
-            style: TextStyle(fontSize: 18.0),
+            style: const TextStyle(fontSize: 18.0),
           ),
           leading: Icon(
             course.icon,
-            color: course.units_completed_status[content_index]
-                ? Colors.lightGreen
-                : Colors.transparent,
+            color: course.units_completed_status[content_index] ? Colors.lightGreen : Colors.transparent,
           ),
         ),
       ),

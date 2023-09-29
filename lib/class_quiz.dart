@@ -12,7 +12,7 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'generate_certificate.dart';
 
 class ClassQuiz extends StatefulWidget {
-  const ClassQuiz({
+  const ClassQuiz({super.key, 
     required this.course_id,
     required this.course_name,
     required this.unit_id,
@@ -78,7 +78,7 @@ class _ClassQuizState extends State<ClassQuiz> {
     return [
       Container(
         width: 150,
-        margin: EdgeInsets.only(right: 20),
+        margin: const EdgeInsets.only(right: 20),
         child: widget.language_picker
             ? LanguagePicker(
                 translation_stream_list: translation_stream_list,
@@ -112,7 +112,7 @@ class _ClassQuizState extends State<ClassQuiz> {
         if (current_answers.length > 2) {
           while (final_possible_answers.length <
               (current_answers.length == 3 ? 2 : 3)) {
-            final random = new Random();
+            final random = Random();
 
             String random_possible_answer =
                 current_answers[random.nextInt(current_answers.length)]
@@ -123,12 +123,14 @@ class _ClassQuizState extends State<ClassQuiz> {
               bool random_possible_answer_already_exist = false;
 
               for (var four_possible_answer in final_possible_answers) {
-                if (four_possible_answer == random_possible_answer)
+                if (four_possible_answer == random_possible_answer) {
                   random_possible_answer_already_exist = true;
+                }
               }
 
-              if (!random_possible_answer_already_exist)
+              if (!random_possible_answer_already_exist) {
                 final_possible_answers.add(random_possible_answer);
+              }
             }
           }
 
@@ -195,7 +197,7 @@ class _ClassQuizState extends State<ClassQuiz> {
 
       page_controller.animateToPage(
         widgets_list.length - 1,
-        duration: Duration(milliseconds: 800),
+        duration: const Duration(milliseconds: 800),
         curve: Curves.elasticOut,
       );
     } else {
@@ -211,7 +213,7 @@ class _ClassQuizState extends State<ClassQuiz> {
           (100 * (questions_result.length - possible_next_page_index.length)) /
               questions_result.length;
 
-      if (possible_next_page_index.length > 0) {
+      if (possible_next_page_index.isNotEmpty) {
         int nextPageIndex = 0;
 
         if (possible_next_page_index.length > 1) {
@@ -222,23 +224,24 @@ class _ClassQuizState extends State<ClassQuiz> {
         }
 
         page_controller.animateToPage(nextPageIndex,
-            duration: Duration(milliseconds: 800), curve: Curves.elasticOut);
+            duration: const Duration(milliseconds: 800), curve: Curves.elasticOut);
       } else {
         quiz_passed = true;
 
         page_controller.animateToPage(widgets_list.length - 1,
-            duration: Duration(milliseconds: 800), curve: Curves.elasticOut);
+            duration: const Duration(milliseconds: 800), curve: Curves.elasticOut);
 
         FirebaseFirestore.instance.collection("users").doc(user_id).update({
           "units_completed": FieldValue.arrayUnion([widget.unit_id]),
         }).catchError((err) => print(err));
 
-        if (widget.last_unit)
+        if (widget.last_unit) {
           check_if_exist_certificate(
             course_id: widget.course_id,
             context: context,
             show_has_certificate: true,
           );
+        }
       }
       setState(() {});
     }
@@ -264,13 +267,11 @@ class _ClassQuizState extends State<ClassQuiz> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    String progress_text = text_list.get(source_language_index)[1] +
-        " " +
-        (percentage_progress.toString().length > 4
+    String progress_text = "${text_list.get(source_language_index)[1]} ${percentage_progress.toString().length > 4
             ? percentage_progress
                 .toString()
                 .substring(0, percentage_progress.toString().indexOf("."))
-            : percentage_progress.toString());
+            : percentage_progress.toString()}";
 
     return Scaffold(
       appBar: TopBar(
@@ -282,10 +283,10 @@ class _ClassQuizState extends State<ClassQuiz> {
         logo_path: "assets/images/logo.png",
       ),
       body: Container(
-        child: widgets_list.length == 0
+        child: widgets_list.isEmpty
             ? Center(
                 child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
+                  valueColor: AlwaysStoppedAnimation<Color>(
                     Theme.of(context).primaryColor,
                   ),
                 ),
@@ -295,15 +296,13 @@ class _ClassQuizState extends State<ClassQuiz> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                         top: 15,
                         bottom: 15,
                       ),
                       child: Text(
-                        text_list.get(source_language_index)[0] +
-                            " " +
-                            lives.toString(),
-                        style: TextStyle(
+                        "${text_list.get(source_language_index)[0]} $lives",
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
@@ -312,11 +311,11 @@ class _ClassQuizState extends State<ClassQuiz> {
                   ),
                   Expanded(
                     flex: 8,
-                    child: Container(
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height / 1.33,
                       child: PageView(
                         scrollDirection: Axis.horizontal,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         onPageChanged: (int page) {
                           setState(() {
                             current_page = page;
@@ -332,7 +331,7 @@ class _ClassQuizState extends State<ClassQuiz> {
                     flex: 1,
                     child: Text(
                       progress_text,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),

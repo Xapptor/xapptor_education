@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
@@ -62,7 +60,7 @@ Future<Uint8List> generate_pdf_certificate({
         bold: await PdfGoogleFonts.quicksandMedium(),
         icons: await PdfGoogleFonts.materialIcons(),
       ),
-      pageFormat: PdfPageFormat(
+      pageFormat: const PdfPageFormat(
         40 * PdfPageFormat.cm,
         32 * PdfPageFormat.cm,
       ),
@@ -76,7 +74,7 @@ Future<Uint8List> generate_pdf_certificate({
               ],
               begin: pw.Alignment.topCenter,
               end: pw.Alignment.bottomCenter,
-              stops: [0.0, 0.3],
+              stops: const [0.0, 0.3],
               tileMode: pw.TileMode.clamp,
             ),
           ),
@@ -158,7 +156,7 @@ Future<Uint8List> generate_pdf_certificate({
                             pw.Expanded(
                               flex: 2,
                               child: pw.Text(
-                                "Has successfully completed the requirements set forth by the ${institution_name} program guidelines for ${certificate.course_name} Certification on ${certificate.date}.",
+                                "Has successfully completed the requirements set forth by the $institution_name program guidelines for ${certificate.course_name} Certification on ${certificate.date}.",
                                 textAlign: pw.TextAlign.center,
                                 style: pw.TextStyle(
                                   color: PdfColors.black,
@@ -205,7 +203,7 @@ Future<Uint8List> generate_pdf_certificate({
                                         pw.Container(
                                           height: 1,
                                           width: 150,
-                                          margin: pw.EdgeInsets.all(10),
+                                          margin: const pw.EdgeInsets.all(10),
                                           color: PdfColors.black,
                                         ),
                                         pw.Expanded(
@@ -248,13 +246,8 @@ Future<Uint8List> generate_pdf_certificate({
                                         pw.Expanded(
                                           flex: 1,
                                           child: PdfUrlText(
-                                            text: website +
-                                                "/certificates/" +
-                                                certificate.id,
-                                            url: "https://" +
-                                                website +
-                                                "/certificates/" +
-                                                certificate.id,
+                                            text: "$website/certificates/${certificate.id}",
+                                            url: "https://$website/certificates/${certificate.id}",
                                             font_size: 14,
                                           ),
                                         ),

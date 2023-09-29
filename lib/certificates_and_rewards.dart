@@ -19,7 +19,7 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'generate_certificate.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
-  const CertificatesAndRewards({
+  const CertificatesAndRewards({super.key, 
     required this.topbar_color,
     required this.text_color,
     required this.button_color_1,
@@ -127,7 +127,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
         courses_id = List.from(user_info["products_acquired"]);
         for (var course_id in courses_id) {
           get_certificates_timer =
-              Timer(Duration(milliseconds: 2500), () async {
+              Timer(const Duration(milliseconds: 2500), () async {
             user_info = await get_user_info(user_id);
             get_certificates();
           });
@@ -166,8 +166,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
     double screen_height = MediaQuery.of(context).size.height;
-    EdgeInsets margin = EdgeInsets.all(20);
-    EdgeInsets padding = EdgeInsets.all(10);
+    EdgeInsets margin = const EdgeInsets.all(20);
+    EdgeInsets padding = const EdgeInsets.all(10);
 
     return Scaffold(
       appBar: TopBar(
@@ -176,7 +176,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
         has_back_button: true,
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 20),
+            margin: const EdgeInsets.only(right: 20),
             width: 150,
             child: LanguagePicker(
               translation_stream_list: translation_stream_list,
@@ -199,7 +199,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             background_color: widget.button_color_1,
             page: certificates.isEmpty
                 ? Container(
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "You don't have any certificate",
                         style: TextStyle(
@@ -262,7 +262,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                       children: [
                                         Text(
                                           certificates[i].course_name,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -271,7 +271,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                             style: DefaultTextStyle.of(context)
                                                 .style,
                                             children: [
-                                              TextSpan(
+                                              const TextSpan(
                                                 text: 'Date: ',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -289,7 +289,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Text(
+                                            const Text(
                                               'ID: ',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -297,7 +297,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                             ),
                                             SelectableText(
                                               certificates[i].id,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 14,
                                               ),
                                             ),

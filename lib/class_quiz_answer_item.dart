@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class ClassQuizAnswerItem extends StatefulWidget {
-  const ClassQuizAnswerItem({
+  const ClassQuizAnswerItem({super.key, 
     required this.answer_text,
     required this.index,
     required this.class_quiz_question,
@@ -37,7 +37,7 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
 
     return Container(
       height: MediaQuery.of(context).size.height / 6,
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       child: CustomCard(
         splash_color: widget.text_color.withOpacity(0.3),
         linear_gradient: LinearGradient(

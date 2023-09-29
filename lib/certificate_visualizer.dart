@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CertificateVisualizer extends StatefulWidget {
-  CertificateVisualizer({
+  CertificateVisualizer({super.key, 
     required this.certificate,
     required this.topbar_color,
     required this.institution_name,
@@ -52,7 +52,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
         .ref("users")
         .child(widget.certificate!.user_id)
         .child("certificates")
-        .child(widget.certificate!.id + ".pdf");
+        .child("${widget.certificate!.id}.pdf");
 
     check_if_file_exist();
   }
@@ -63,7 +63,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
       setState(() {});
     }).onError((error, stackTrace) async {
       print(error);
-      generate_pdf_timer = Timer(Duration(milliseconds: 500), () async {
+      generate_pdf_timer = Timer(const Duration(milliseconds: 500), () async {
         generate_pdf();
       });
     });
@@ -123,7 +123,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
         actions: pdf_url.isNotEmpty
             ? [
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     FontAwesomeIcons.download,
                     color: Colors.white,
                   ),
@@ -151,7 +151,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
                     ? FirebaseAuth.instance.currentUser!.uid ==
                             widget.certificate!.user_id
                         ? IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.autorenew,
                               color: Colors.white,
                             ),

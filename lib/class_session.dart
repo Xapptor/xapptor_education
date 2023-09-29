@@ -16,7 +16,7 @@ import 'class_quiz.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class ClassSession extends StatefulWidget {
-  const ClassSession({
+  const ClassSession({super.key, 
     required this.course_id,
     required this.course_name,
     required this.unit_id,
@@ -64,7 +64,7 @@ class _ClassSessionState extends State<ClassSession> {
   Map video_urls = {};
   bool first_time_updating_text = true;
   late SharedPreferences prefs;
-  String webview_id = Uuid().v4();
+  String webview_id = const Uuid().v4();
   String complete_url = "";
 
   int source_language_index = 0;
@@ -86,7 +86,7 @@ class _ClassSessionState extends State<ClassSession> {
 
     if (index == (text_list.list[0].text_list.length - 1)) {
       if (!first_time_updating_text) {
-        Timer(Duration(milliseconds: 300), () {
+        Timer(const Duration(milliseconds: 300), () {
           set_video_url();
         });
       } else {
@@ -151,7 +151,7 @@ class _ClassSessionState extends State<ClassSession> {
           : "en"],
     );
 
-    Timer(Duration(milliseconds: 300), () {
+    Timer(const Duration(milliseconds: 300), () {
       if (UniversalPlatform.isWeb) {
         setState(() {});
       } else {
@@ -194,7 +194,7 @@ class _ClassSessionState extends State<ClassSession> {
         actions: [
           Container(
             width: 150,
-            margin: EdgeInsets.only(right: 20),
+            margin: const EdgeInsets.only(right: 20),
             child: LanguagePicker(
               translation_stream_list: translation_stream_list,
               language_picker_items_text_color: widget.text_color,
@@ -203,7 +203,7 @@ class _ClassSessionState extends State<ClassSession> {
           ),
         ],
         custom_leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         logo_path: "assets/images/logo.png",
@@ -220,11 +220,9 @@ class _ClassSessionState extends State<ClassSession> {
                       height: sized_box_space * 4,
                     ),
                     AutoSizeText(
-                      text_list.get(source_language_index)[0] +
-                          " - " +
-                          text_list.get(source_language_index)[1],
+                      "${text_list.get(source_language_index)[0]} - ${text_list.get(source_language_index)[1]}",
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -239,7 +237,7 @@ class _ClassSessionState extends State<ClassSession> {
                     SelectableText(
                       text_list.get(source_language_index)[2],
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -251,7 +249,7 @@ class _ClassSessionState extends State<ClassSession> {
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
                 width: MediaQuery.of(context).size.width / (portrait ? 1 : 2),
                 child: Webview(
@@ -270,7 +268,7 @@ class _ClassSessionState extends State<ClassSession> {
                     SelectableText(
                       text_list.get(source_language_index)[3],
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -279,7 +277,7 @@ class _ClassSessionState extends State<ClassSession> {
                     SizedBox(
                       height: sized_box_space * 2,
                     ),
-                    Container(
+                    SizedBox(
                       height: 40,
                       width: 200,
                       child: CustomCard(
@@ -311,7 +309,7 @@ class _ClassSessionState extends State<ClassSession> {
                         child: Center(
                           child: Text(
                             text_list.get(source_language_index)[4],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),

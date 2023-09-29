@@ -94,7 +94,7 @@ save_certificate({
       )
           .then((value) => {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text("Certificate email sent! ✉️"),
                     duration: Duration(seconds: 3),
                   ),
@@ -107,7 +107,7 @@ save_certificate({
   } else {
     if (show_has_certificate) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("You already have this certificate 👍"),
           duration: Duration(seconds: 3),
         ),
