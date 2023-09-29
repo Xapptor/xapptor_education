@@ -12,7 +12,8 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'generate_certificate.dart';
 
 class ClassQuiz extends StatefulWidget {
-  const ClassQuiz({super.key, 
+  const ClassQuiz({
+    super.key,
     required this.course_id,
     required this.course_name,
     required this.unit_id,
@@ -33,7 +34,7 @@ class ClassQuiz extends StatefulWidget {
   final Color topbar_color;
 
   @override
-  _ClassQuizState createState() => _ClassQuizState();
+  State<ClassQuiz> createState() => _ClassQuizState();
 }
 
 class _ClassQuizState extends State<ClassQuiz> {
@@ -82,8 +83,7 @@ class _ClassQuizState extends State<ClassQuiz> {
         child: widget.language_picker
             ? LanguagePicker(
                 translation_stream_list: translation_stream_list,
-                language_picker_items_text_color:
-                    widget.language_picker_items_text_color,
+                language_picker_items_text_color: widget.language_picker_items_text_color,
                 update_source_language: update_source_language,
               )
             : Container(),
@@ -94,11 +94,7 @@ class _ClassQuizState extends State<ClassQuiz> {
   // Retrieving quiz data.
 
   get_quiz_data(String unit_id) {
-    FirebaseFirestore.instance
-        .collection('quizzes')
-        .doc(unit_id)
-        .get()
-        .then((DocumentSnapshot doc_snap) {
+    FirebaseFirestore.instance.collection('quizzes').doc(unit_id).get().then((DocumentSnapshot doc_snap) {
       List questions_object = doc_snap.get("questions");
 
       questions_object.shuffle();
@@ -110,16 +106,12 @@ class _ClassQuizState extends State<ClassQuiz> {
         List current_answers = questions_object[i]["answers"];
 
         if (current_answers.length > 2) {
-          while (final_possible_answers.length <
-              (current_answers.length == 3 ? 2 : 3)) {
+          while (final_possible_answers.length < (current_answers.length == 3 ? 2 : 3)) {
             final random = Random();
 
-            String random_possible_answer =
-                current_answers[random.nextInt(current_answers.length)]
-                    .toString();
+            String random_possible_answer = current_answers[random.nextInt(current_answers.length)].toString();
 
-            if (random_possible_answer !=
-                questions_object[i]["correct_answer"].toString()) {
+            if (random_possible_answer != questions_object[i]["correct_answer"].toString()) {
               bool random_possible_answer_already_exist = false;
 
               for (var four_possible_answer in final_possible_answers) {
@@ -210,15 +202,13 @@ class _ClassQuizState extends State<ClassQuiz> {
       }
 
       percentage_progress =
-          (100 * (questions_result.length - possible_next_page_index.length)) /
-              questions_result.length;
+          (100 * (questions_result.length - possible_next_page_index.length)) / questions_result.length;
 
       if (possible_next_page_index.isNotEmpty) {
         int nextPageIndex = 0;
 
         if (possible_next_page_index.length > 1) {
-          nextPageIndex = possible_next_page_index
-              .firstWhere((possible) => possible != current_page);
+          nextPageIndex = possible_next_page_index.firstWhere((possible) => possible != current_page);
         } else {
           nextPageIndex = possible_next_page_index[0];
         }
@@ -233,7 +223,7 @@ class _ClassQuizState extends State<ClassQuiz> {
 
         FirebaseFirestore.instance.collection("users").doc(user_id).update({
           "units_completed": FieldValue.arrayUnion([widget.unit_id]),
-        }).catchError((err) => print(err));
+        }).catchError((err) => debugPrint(err));
 
         if (widget.last_unit) {
           check_if_exist_certificate(
@@ -267,11 +257,8 @@ class _ClassQuizState extends State<ClassQuiz> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    String progress_text = "${text_list.get(source_language_index)[1]} ${percentage_progress.toString().length > 4
-            ? percentage_progress
-                .toString()
-                .substring(0, percentage_progress.toString().indexOf("."))
-            : percentage_progress.toString()}";
+    String progress_text =
+        "${text_list.get(source_language_index)[1]} ${percentage_progress.toString().length > 4 ? percentage_progress.toString().substring(0, percentage_progress.toString().indexOf(".")) : percentage_progress.toString()}";
 
     return Scaffold(
       appBar: TopBar(

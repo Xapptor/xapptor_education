@@ -27,10 +27,7 @@ check_if_exist_certificate({
 
   if (has_certificates) {
     for (var certificate in certificates!) {
-      var certificate_snap = await FirebaseFirestore.instance
-          .collection('certificates')
-          .doc(certificate)
-          .get();
+      var certificate_snap = await FirebaseFirestore.instance.collection('certificates').doc(certificate).get();
 
       String snapshot_course_id = certificate_snap.get("course_id");
 
@@ -76,19 +73,15 @@ save_certificate({
     }).then((new_certificate) async {
       FirebaseFirestore.instance.collection("users").doc(user.uid).update({
         "certificates": FieldValue.arrayUnion([new_certificate.id]),
-      }).catchError((err) => print(err));
+      }).catchError((err) => debugPrint(err));
 
-      DocumentSnapshot course_snapshot = await FirebaseFirestore.instance
-          .collection("courses")
-          .doc(course_id)
-          .get();
+      DocumentSnapshot course_snapshot = await FirebaseFirestore.instance.collection("courses").doc(course_id).get();
 
       String course_name = course_snapshot.get("name");
 
       send_email(
         to: user.email!,
-        subject:
-            "${user_info["firstname"]} ${user_info["lastname"]}, $course_name certificate",
+        subject: "${user_info["firstname"]} ${user_info["lastname"]}, $course_name certificate",
         text:
             "Congratulations ${user_info["firstname"]} ${user_info["lastname"]}, here is your $course_name certificate, ${xapptor_education_options.website}/certificates/${new_certificate.id}",
       )
@@ -100,9 +93,9 @@ save_certificate({
                   ),
                 ),
               })
-          .catchError((err) => print(err));
+          .catchError((err) => debugPrint(err));
     }).catchError((err) {
-      print(err);
+      debugPrint(err);
     });
   } else {
     if (show_has_certificate) {
@@ -123,11 +116,7 @@ check_if_course_was_completed({
   required Map<String, dynamic> user_info,
   required BuildContext context,
 }) {
-  FirebaseFirestore.instance
-      .collection('courses')
-      .doc(course_id)
-      .get()
-      .then((course) async {
+  FirebaseFirestore.instance.collection('courses').doc(course_id).get().then((course) async {
     List units_id = course["units"];
 
     if (user_info["units_completed"] != null) {

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class ClassQuizAnswerItem extends StatefulWidget {
-  const ClassQuizAnswerItem({super.key, 
+  const ClassQuizAnswerItem({
+    super.key,
     required this.answer_text,
     required this.index,
     required this.class_quiz_question,
@@ -19,7 +20,7 @@ class ClassQuizAnswerItem extends StatefulWidget {
   final Color text_color;
 
   @override
-  _ClassQuizAnswerItemState createState() => _ClassQuizAnswerItemState();
+  State<ClassQuizAnswerItem> createState() => _ClassQuizAnswerItemState();
 }
 
 class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
@@ -32,8 +33,7 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
   Widget build(BuildContext context) {
     bool is_image = widget.answer_text.contains("http");
 
-    Color background_color =
-        widget.selected ? Colors.cyan : widget.background_color;
+    Color background_color = widget.selected ? Colors.cyan : widget.background_color;
 
     return Container(
       height: MediaQuery.of(context).size.height / 6,
@@ -61,9 +61,7 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
                 : Text(
                     widget.answer_text,
                     style: TextStyle(
-                      color: !widget.selected
-                          ? Colors.cyan
-                          : widget.background_color,
+                      color: !widget.selected ? Colors.cyan : widget.background_color,
                     ),
                   ),
           ),

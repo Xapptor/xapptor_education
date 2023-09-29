@@ -19,7 +19,8 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'generate_certificate.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
-  const CertificatesAndRewards({super.key, 
+  const CertificatesAndRewards({
+    super.key,
     required this.topbar_color,
     required this.text_color,
     required this.button_color_1,
@@ -44,7 +45,7 @@ class CertificatesAndRewards extends StatefulWidget {
   final String signature_image_path;
 
   @override
-  _CertificatesAndRewardsState createState() => _CertificatesAndRewardsState();
+  State<CertificatesAndRewards> createState() => _CertificatesAndRewardsState();
 }
 
 class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
@@ -126,8 +127,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
       if (user_info["products_acquired"].length > 0) {
         courses_id = List.from(user_info["products_acquired"]);
         for (var course_id in courses_id) {
-          get_certificates_timer =
-              Timer(const Duration(milliseconds: 2500), () async {
+          get_certificates_timer = Timer(const Duration(milliseconds: 2500), () async {
             user_info = await get_user_info(user_id);
             get_certificates();
           });
@@ -198,121 +198,107 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             foreground_color: Colors.white,
             background_color: widget.button_color_1,
             page: certificates.isEmpty
-                ? Container(
-                    child: const Center(
-                      child: Text(
-                        "You don't have any certificate",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                ? const Center(
+                    child: Text(
+                      "You don't have any certificate",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   )
-                : Container(
-                    child: ListView.builder(
-                      itemCount: certificates.length,
-                      itemBuilder: (context, i) {
-                        return FractionallySizedBox(
-                          widthFactor: portrait ? 1 : 0.4,
-                          child: Container(
-                            height: screen_height / (portrait ? 6 : 8),
-                            margin: margin,
-                            child: CustomCard(
-                              splash_color:
-                                  widget.button_color_2.withOpacity(0.2),
-                              elevation: 3,
-                              border_radius: 20,
-                              on_pressed: () {
-                                String certificate_id = certificates[i].id;
-                                add_new_app_screen(
-                                  AppScreen(
-                                    name:
-                                        "home/certificates_and_rewards/$certificate_id",
-                                    child: CertificateVisualizer(
-                                      certificate: certificates[i],
-                                      topbar_color: widget.topbar_color,
-                                      institution_name: widget.institution_name,
-                                      location: widget.location,
-                                      website: widget.website,
-                                      logo_image_path: widget.logo_image_path,
-                                      ribbon_image_path:
-                                          widget.ribbon_image_path,
-                                      signature_image_path:
-                                          widget.signature_image_path,
-                                    ),
+                : ListView.builder(
+                    itemCount: certificates.length,
+                    itemBuilder: (context, i) {
+                      return FractionallySizedBox(
+                        widthFactor: portrait ? 1 : 0.4,
+                        child: Container(
+                          height: screen_height / (portrait ? 6 : 8),
+                          margin: margin,
+                          child: CustomCard(
+                            splash_color: widget.button_color_2.withOpacity(0.2),
+                            elevation: 3,
+                            border_radius: 20,
+                            on_pressed: () {
+                              String certificate_id = certificates[i].id;
+                              add_new_app_screen(
+                                AppScreen(
+                                  name: "home/certificates_and_rewards/$certificate_id",
+                                  child: CertificateVisualizer(
+                                    certificate: certificates[i],
+                                    topbar_color: widget.topbar_color,
+                                    institution_name: widget.institution_name,
+                                    location: widget.location,
+                                    website: widget.website,
+                                    logo_image_path: widget.logo_image_path,
+                                    ribbon_image_path: widget.ribbon_image_path,
+                                    signature_image_path: widget.signature_image_path,
                                   ),
-                                );
-                                open_screen(
-                                    "home/certificates_and_rewards/$certificate_id");
-                              },
-                              child: Center(
-                                child: Container(
-                                  padding: padding,
-                                  child: ListTile(
-                                    leading: Icon(
-                                      FontAwesomeIcons.newspaper,
-                                      color: widget.topbar_color,
-                                    ),
-                                    title: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          certificates[i].course_name,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                ),
+                              );
+                              open_screen("home/certificates_and_rewards/$certificate_id");
+                            },
+                            child: Center(
+                              child: Container(
+                                padding: padding,
+                                child: ListTile(
+                                  leading: Icon(
+                                    FontAwesomeIcons.newspaper,
+                                    color: widget.topbar_color,
+                                  ),
+                                  title: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        certificates[i].course_name,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        RichText(
-                                          text: TextSpan(
-                                            style: DefaultTextStyle.of(context)
-                                                .style,
-                                            children: [
-                                              const TextSpan(
-                                                text: 'Date: ',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: certificates[i].date,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          style: DefaultTextStyle.of(context).style,
                                           children: [
-                                            const Text(
-                                              'ID: ',
+                                            const TextSpan(
+                                              text: 'Date: ',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            SelectableText(
-                                              certificates[i].id,
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                              ),
+                                            TextSpan(
+                                              text: certificates[i].date,
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'ID: ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SelectableText(
+                                            certificates[i].id,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
           ),
           BottomBarButton(

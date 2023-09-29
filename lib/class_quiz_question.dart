@@ -7,7 +7,8 @@ import 'class_quiz_answer_item.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class ClassQuizQuestion extends StatefulWidget {
-  const ClassQuizQuestion({super.key, 
+  const ClassQuizQuestion({
+    super.key,
     required this.question_title,
     required this.answers,
     required this.demos,
@@ -26,7 +27,7 @@ class ClassQuizQuestion extends StatefulWidget {
   final Color text_color;
 
   @override
-  _ClassQuizQuestionState createState() => _ClassQuizQuestionState();
+  State createState() => _ClassQuizQuestionState();
 }
 
 class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
@@ -109,99 +110,94 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    return Container(
-      child: Column(
-        children: <Widget>[
-          const Spacer(flex: 1),
-          Expanded(
-            flex: 3,
-            child: SizedBox(
-              width: portrait ? 300 : 700,
-              child: AutoSizeText(
-                text_list.get(source_language_index)[0],
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+    return Column(
+      children: <Widget>[
+        const Spacer(flex: 1),
+        Expanded(
+          flex: 3,
+          child: SizedBox(
+            width: portrait ? 300 : 700,
+            child: AutoSizeText(
+              text_list.get(source_language_index)[0],
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              minFontSize: 12,
+              maxLines: 5,
+              overflow: TextOverflow.clip,
+            ),
+          ),
+        ),
+        widget.demos == null
+            ? Container()
+            : Expanded(
+                flex: 3,
+                child: Image.network(
+                  widget.demos![0],
+                  fit: BoxFit.fitHeight,
                 ),
-                minFontSize: 12,
-                maxLines: 5,
-                overflow: TextOverflow.clip,
+              ),
+        Expanded(
+          flex: 9,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.answers.length,
+            itemBuilder: (BuildContext context, int index) => FractionallySizedBox(
+              widthFactor: portrait ? 0.85 : 0.4,
+              child: ClassQuizAnswerItem(
+                answer_text: text_list.list[0].text_list.length >= (index + 4)
+                    ? answers_list[index].contains("http")
+                        ? answers_list[index]
+                        : text_list.get(source_language_index)[index + 3]
+                    : "",
+                index: index,
+                class_quiz_question: this,
+                selected: current_index == index,
+                background_color: widget.answers.length > 2
+                    ? (index % 2 == 0)
+                        ? Colors.white
+                        : const Color(0xffe4eded)
+                    : Colors.white,
+                text_color: widget.text_color,
               ),
             ),
           ),
-          widget.demos == null
-              ? Container()
-              : Expanded(
-                  flex: 3,
-                  child: Image.network(
-                    widget.demos![0],
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-          Expanded(
-            flex: 9,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.answers.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  FractionallySizedBox(
-                widthFactor: portrait ? 0.85 : 0.4,
-                child: ClassQuizAnswerItem(
-                  answer_text: text_list.list[0].text_list.length >= (index + 4)
-                      ? answers_list[index].contains("http")
-                          ? answers_list[index]
-                          : text_list.get(source_language_index)[index + 3]
-                      : "",
-                  index: index,
-                  class_quiz_question: this,
-                  selected: current_index == index,
-                  background_color: widget.answers.length > 2
-                      ? (index % 2 == 0)
-                          ? Colors.white
-                          : const Color(0xffe4eded)
-                      : Colors.white,
-                  text_color: widget.text_color,
-                ),
+        ),
+        const Spacer(flex: 1),
+        Expanded(
+          flex: 1,
+          child: SizedBox(
+            width: 200,
+            child: CustomCard(
+              linear_gradient: LinearGradient(
+                colors: [
+                  widget.text_color,
+                  widget.text_color,
+                ],
               ),
-            ),
-          ),
-          const Spacer(flex: 1),
-          Expanded(
-            flex: 1,
-            child: SizedBox(
-              width: 200,
-              child: CustomCard(
-                linear_gradient: LinearGradient(
-                  colors: [
-                    widget.text_color,
-                    widget.text_color,
-                  ],
-                ),
-                border_radius: 1000,
-                on_pressed: () {
-                  bool answer_is_correct =
-                      text_list.get(source_language_index)[current_index + 3] ==
-                          text_list.get(source_language_index)[2];
+              border_radius: 1000,
+              on_pressed: () {
+                bool answer_is_correct =
+                    text_list.get(source_language_index)[current_index + 3] == text_list.get(source_language_index)[2];
 
-                  widget.class_quiz
-                      .get_next_question(answer_is_correct, widget.question_id);
-                },
-                child: Center(
-                  child: Text(
-                    text_list.get(source_language_index)[1],
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
+                widget.class_quiz.get_next_question(answer_is_correct, widget.question_id);
+              },
+              child: Center(
+                child: Text(
+                  text_list.get(source_language_index)[1],
+                  style: const TextStyle(
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
           ),
-          const Spacer(flex: 1),
-        ],
-      ),
+        ),
+        const Spacer(flex: 1),
+      ],
     );
   }
 }

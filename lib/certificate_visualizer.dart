@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -16,7 +18,8 @@ import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CertificateVisualizer extends StatefulWidget {
-  CertificateVisualizer({super.key, 
+  CertificateVisualizer({
+    super.key,
     required this.certificate,
     required this.topbar_color,
     required this.institution_name,
@@ -37,7 +40,7 @@ class CertificateVisualizer extends StatefulWidget {
   final String signature_image_path;
 
   @override
-  _CertificateVisualizerState createState() => _CertificateVisualizerState();
+  State<CertificateVisualizer> createState() => _CertificateVisualizerState();
 }
 
 class _CertificateVisualizerState extends State<CertificateVisualizer> {
@@ -62,7 +65,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
       pdf_url = url;
       setState(() {});
     }).onError((error, stackTrace) async {
-      print(error);
+      debugPrint(error.toString());
       generate_pdf_timer = Timer(const Duration(milliseconds: 500), () async {
         generate_pdf();
       });
@@ -148,8 +151,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
                   },
                 ),
                 FirebaseAuth.instance.currentUser != null
-                    ? FirebaseAuth.instance.currentUser!.uid ==
-                            widget.certificate!.user_id
+                    ? FirebaseAuth.instance.currentUser!.uid == widget.certificate!.user_id
                         ? IconButton(
                             icon: const Icon(
                               Icons.autorenew,
@@ -159,15 +161,13 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
                               check_limit_per_date(
                                 new_value: widget.certificate!.id,
                                 context: context,
-                                reached_limit_alert_title:
-                                    "Max certificates generated per day!",
+                                reached_limit_alert_title: "Max certificates generated per day!",
                                 check_limit_per_date_callback: () {
                                   pdf_url = "";
                                   setState(() {});
                                   generate_pdf();
                                 },
-                                cache_lifetime_in_seconds:
-                                    Duration.secondsPerDay * 5,
+                                cache_lifetime_in_seconds: Duration.secondsPerDay * 5,
                                 limit: 5,
                                 limit_field_name: "generate_certificate_limit",
                                 array_field_name: "certificates",

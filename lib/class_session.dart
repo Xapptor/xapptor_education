@@ -16,7 +16,8 @@ import 'class_quiz.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class ClassSession extends StatefulWidget {
-  const ClassSession({super.key, 
+  const ClassSession({
+    super.key,
     required this.course_id,
     required this.course_name,
     required this.unit_id,
@@ -37,7 +38,7 @@ class ClassSession extends StatefulWidget {
   final String website;
 
   @override
-  _ClassSessionState createState() => _ClassSessionState();
+  State<ClassSession> createState() => _ClassSessionState();
 }
 
 class _ClassSessionState extends State<ClassSession> {
@@ -100,11 +101,7 @@ class _ClassSessionState extends State<ClassSession> {
   get_texts() async {
     prefs = await SharedPreferences.getInstance();
 
-    FirebaseFirestore.instance
-        .collection('units')
-        .doc(widget.unit_id)
-        .get()
-        .then((DocumentSnapshot doc_snap) {
+    FirebaseFirestore.instance.collection('units').doc(widget.unit_id).get().then((DocumentSnapshot doc_snap) {
       text_list.list[0].text_list = [
         doc_snap.get("title"),
         doc_snap.get("subtitle"),
@@ -146,9 +143,7 @@ class _ClassSessionState extends State<ClassSession> {
     }
 
     complete_url = generate_video_url_for_current_platform(
-      video_urls[(current_language == "en" || current_language == "es")
-          ? current_language
-          : "en"],
+      video_urls[(current_language == "en" || current_language == "es") ? current_language : "en"],
     );
 
     Timer(const Duration(milliseconds: 300), () {
@@ -297,8 +292,7 @@ class _ClassSessionState extends State<ClassSession> {
                                 course_name: widget.course_name,
                                 unit_id: widget.unit_id,
                                 last_unit: last_unit,
-                                language_picker_items_text_color:
-                                    widget.language_picker_items_text_color,
+                                language_picker_items_text_color: widget.language_picker_items_text_color,
                                 language_picker: widget.language_picker,
                                 text_color: widget.text_color,
                                 topbar_color: widget.topbar_color,
