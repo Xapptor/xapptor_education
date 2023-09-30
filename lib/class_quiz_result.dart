@@ -10,6 +10,7 @@ class ClassQuizResult extends StatefulWidget {
   });
 
   final String button_text;
+  // ignore: prefer_typing_uninitialized_variables
   final class_quiz;
   final Color text_color;
 

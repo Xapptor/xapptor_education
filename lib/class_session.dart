@@ -171,6 +171,7 @@ class _ClassSessionState extends State<ClassSession> {
     get_texts();
   }
 
+  // ignore: prefer_typing_uninitialized_variables
   late var webview_controller;
 
   controller_callback(var current_webview_controller) {

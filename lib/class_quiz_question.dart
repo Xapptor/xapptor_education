@@ -21,6 +21,7 @@ class ClassQuizQuestion extends StatefulWidget {
   final String question_title;
   final List answers;
   final List? demos;
+  // ignore: prefer_typing_uninitialized_variables
   final class_quiz;
   final String correct_answer;
   final int question_id;

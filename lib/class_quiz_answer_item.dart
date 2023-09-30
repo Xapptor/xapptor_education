@@ -14,6 +14,7 @@ class ClassQuizAnswerItem extends StatefulWidget {
 
   final String answer_text;
   final int index;
+  // ignore: prefer_typing_uninitialized_variables
   final class_quiz_question;
   final bool selected;
   final Color background_color;
