@@ -34,6 +34,19 @@ check_if_exist_certificate({
       if (snapshot_course_id == course_id) {
         has_certificate = true;
       }
+      if (context.mounted) {
+        save_certificate(
+          user: user,
+          user_info: user_info,
+          course_id: course_id,
+          has_certificate: has_certificate,
+          context: context,
+          show_has_certificate: show_has_certificate,
+        );
+      }
+    }
+  } else {
+    if (context.mounted) {
       save_certificate(
         user: user,
         user_info: user_info,
@@ -43,15 +56,6 @@ check_if_exist_certificate({
         show_has_certificate: show_has_certificate,
       );
     }
-  } else {
-    save_certificate(
-      user: user,
-      user_info: user_info,
-      course_id: course_id,
-      has_certificate: has_certificate,
-      context: context,
-      show_has_certificate: show_has_certificate,
-    );
   }
 }
 
