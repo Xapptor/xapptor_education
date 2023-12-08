@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:xapptor_translation/model/text_list.dart';
 import 'package:xapptor_translation/translation_stream.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
@@ -199,7 +200,10 @@ class _ClassSessionState extends State<ClassSession> {
           ),
         ],
         custom_leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(
+            FontAwesomeIcons.angleLeft,
+            color: Colors.white,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         logo_path: "assets/images/logo.png",
