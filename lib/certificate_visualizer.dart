@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:async';
-import 'dart:convert';
 import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -143,7 +142,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
                     } else {
                       http.get(Uri.parse(pdf_url)).then((response) {
                         FileDownloader.save(
-                          src: base64.encode(response.bodyBytes),
+                          src: response.bodyBytes,
                           file_name: file_name,
                         );
                       });
