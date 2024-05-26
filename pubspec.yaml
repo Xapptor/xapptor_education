@@ -17,7 +17,7 @@ dependencies:
 
   auto_size_text_pk: ^3.0.0
   uuid: ^4.3.3
-  universal_platform: ^1.0.0+1
+  universal_platform: ^1.1.0
   http: ^1.2.0
   shared_preferences: ^2.2.2
   syncfusion_flutter_pdfviewer: ^24.1.41
