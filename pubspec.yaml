@@ -16,11 +16,11 @@ dependencies:
   firebase_storage: ^11.7.4
 
   auto_size_text_pk: ^3.0.0
-  uuid: ^4.3.3
+  uuid: ^4.4.0
   universal_platform: ^1.1.0
   http: ^1.2.0
-  shared_preferences: ^2.2.2
-  syncfusion_flutter_pdfviewer: ^24.1.41
+  shared_preferences: ^2.2.3
+  syncfusion_flutter_pdfviewer: ^25.2.6
   pdf: ^3.10.8
   printing: ^5.12.0
   font_awesome_flutter: ^10.7.0
