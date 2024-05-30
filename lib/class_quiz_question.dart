@@ -7,6 +7,15 @@ import 'class_quiz_answer_item.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class ClassQuizQuestion extends StatefulWidget {
+  final String question_title;
+  final List answers;
+  final List? demos;
+  // ignore: prefer_typing_uninitialized_variables
+  final class_quiz;
+  final String correct_answer;
+  final int question_id;
+  final Color text_color;
+
   const ClassQuizQuestion({
     super.key,
     required this.question_title,
@@ -17,15 +26,6 @@ class ClassQuizQuestion extends StatefulWidget {
     required this.question_id,
     required this.text_color,
   });
-
-  final String question_title;
-  final List answers;
-  final List? demos;
-  // ignore: prefer_typing_uninitialized_variables
-  final class_quiz;
-  final String correct_answer;
-  final int question_id;
-  final Color text_color;
 
   @override
   State createState() => _ClassQuizQuestionState();

@@ -19,6 +19,17 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'generate_certificate.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
+  final Color topbar_color;
+  final Color text_color;
+  final Color button_color_1;
+  final Color button_color_2;
+  final String institution_name;
+  final String location;
+  final String website;
+  final String logo_image_path;
+  final String ribbon_image_path;
+  final String signature_image_path;
+
   const CertificatesAndRewards({
     super.key,
     required this.topbar_color,
@@ -32,17 +43,6 @@ class CertificatesAndRewards extends StatefulWidget {
     required this.ribbon_image_path,
     required this.signature_image_path,
   });
-
-  final Color topbar_color;
-  final Color text_color;
-  final Color button_color_1;
-  final Color button_color_2;
-  final String institution_name;
-  final String location;
-  final String website;
-  final String logo_image_path;
-  final String ribbon_image_path;
-  final String signature_image_path;
 
   @override
   State<CertificatesAndRewards> createState() => _CertificatesAndRewardsState();

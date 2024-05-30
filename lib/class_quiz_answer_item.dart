@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class ClassQuizAnswerItem extends StatefulWidget {
+  final String answer_text;
+  final int index;
+  // ignore: prefer_typing_uninitialized_variables
+  final class_quiz_question;
+  final bool selected;
+  final Color background_color;
+  final Color text_color;
+
   const ClassQuizAnswerItem({
     super.key,
     required this.answer_text,
@@ -11,14 +19,6 @@ class ClassQuizAnswerItem extends StatefulWidget {
     required this.background_color,
     required this.text_color,
   });
-
-  final String answer_text;
-  final int index;
-  // ignore: prefer_typing_uninitialized_variables
-  final class_quiz_question;
-  final bool selected;
-  final Color background_color;
-  final Color text_color;
 
   @override
   State<ClassQuizAnswerItem> createState() => _ClassQuizAnswerItemState();

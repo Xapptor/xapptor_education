@@ -10,6 +10,12 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CoursesList extends StatefulWidget {
+  final Color language_picker_items_text_color;
+  final bool language_picker;
+  final Color text_color;
+  final Color topbar_color;
+  final String website;
+
   const CoursesList({
     super.key,
     required this.language_picker_items_text_color,
@@ -18,12 +24,6 @@ class CoursesList extends StatefulWidget {
     required this.topbar_color,
     required this.website,
   });
-
-  final Color language_picker_items_text_color;
-  final bool language_picker;
-  final Color text_color;
-  final Color topbar_color;
-  final String website;
 
   @override
   State createState() => _CoursesListState();

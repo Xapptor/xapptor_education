@@ -17,6 +17,15 @@ import 'class_quiz.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class ClassSession extends StatefulWidget {
+  final String course_id;
+  final String course_name;
+  final String unit_id;
+  final Color language_picker_items_text_color;
+  final bool language_picker;
+  final Color text_color;
+  final Color topbar_color;
+  final String website;
+
   const ClassSession({
     super.key,
     required this.course_id,
@@ -28,15 +37,6 @@ class ClassSession extends StatefulWidget {
     required this.topbar_color,
     required this.website,
   });
-
-  final String course_id;
-  final String course_name;
-  final String unit_id;
-  final Color language_picker_items_text_color;
-  final bool language_picker;
-  final Color text_color;
-  final Color topbar_color;
-  final String website;
 
   @override
   State<ClassSession> createState() => _ClassSessionState();

@@ -17,6 +17,15 @@ import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CertificateVisualizer extends StatefulWidget {
+  CourseCertificate? certificate;
+  final Color topbar_color;
+  final String institution_name;
+  final String location;
+  final String website;
+  final String logo_image_path;
+  final String ribbon_image_path;
+  final String signature_image_path;
+
   CertificateVisualizer({
     super.key,
     required this.certificate,
@@ -28,15 +37,6 @@ class CertificateVisualizer extends StatefulWidget {
     required this.ribbon_image_path,
     required this.signature_image_path,
   });
-
-  CourseCertificate? certificate;
-  final Color topbar_color;
-  final String institution_name;
-  final String location;
-  final String website;
-  final String logo_image_path;
-  final String ribbon_image_path;
-  final String signature_image_path;
 
   @override
   State<CertificateVisualizer> createState() => _CertificateVisualizerState();

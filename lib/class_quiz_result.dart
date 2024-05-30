@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class ClassQuizResult extends StatefulWidget {
+  final String button_text;
+  // ignore: prefer_typing_uninitialized_variables
+  final class_quiz;
+  final Color text_color;
+
   const ClassQuizResult({
     super.key,
     required this.button_text,
     required this.class_quiz,
     required this.text_color,
   });
-
-  final String button_text;
-  // ignore: prefer_typing_uninitialized_variables
-  final class_quiz;
-  final Color text_color;
 
   @override
   State<ClassQuizResult> createState() => _ClassQuizResultState();

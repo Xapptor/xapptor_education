@@ -12,6 +12,15 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'generate_certificate.dart';
 
 class ClassQuiz extends StatefulWidget {
+  final String course_id;
+  final String course_name;
+  final String unit_id;
+  final bool last_unit;
+  final Color language_picker_items_text_color;
+  final bool language_picker;
+  final Color text_color;
+  final Color topbar_color;
+
   const ClassQuiz({
     super.key,
     required this.course_id,
@@ -23,15 +32,6 @@ class ClassQuiz extends StatefulWidget {
     required this.text_color,
     required this.topbar_color,
   });
-
-  final String course_id;
-  final String course_name;
-  final String unit_id;
-  final bool last_unit;
-  final Color language_picker_items_text_color;
-  final bool language_picker;
-  final Color text_color;
-  final Color topbar_color;
 
   @override
   State<ClassQuiz> createState() => _ClassQuizState();
