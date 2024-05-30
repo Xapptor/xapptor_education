@@ -39,6 +39,10 @@ dependencies:
   xapptor_ui:
     path: ../xapptor_ui
 
+dependency_overrides:
+  device_info_plus: ^10.1.0
+  js: ^0.7.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
