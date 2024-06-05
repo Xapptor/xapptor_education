@@ -22,7 +22,7 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         const Spacer(flex: 1),
         Expanded(
           flex: 14,

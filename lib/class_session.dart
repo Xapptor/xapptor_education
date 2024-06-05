@@ -211,11 +211,11 @@ class _ClassSessionState extends State<ClassSession> {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-            children: <Widget>[
+            children: [
               FractionallySizedBox(
                 widthFactor: portrait ? 0.85 : 0.3,
                 child: Column(
-                  children: <Widget>[
+                  children: [
                     SizedBox(
                       height: sized_box_space * 4,
                     ),
@@ -261,7 +261,7 @@ class _ClassSessionState extends State<ClassSession> {
               FractionallySizedBox(
                 widthFactor: portrait ? 0.85 : 0.3,
                 child: Column(
-                  children: <Widget>[
+                  children: [
                     SizedBox(
                       height: sized_box_space * 2,
                     ),

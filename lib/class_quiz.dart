@@ -71,7 +71,7 @@ class _ClassQuizState extends State<ClassQuiz> {
   final PageController page_controller = PageController(initialPage: 0);
 
   int current_page = 0;
-  List<Widget> widgets_list = <Widget>[];
+  List<Widget> widgets_list = [];
 
   // Topbar widgets action.
 
@@ -279,7 +279,7 @@ class _ClassQuizState extends State<ClassQuiz> {
                 ),
               )
             : Column(
-                children: <Widget>[
+                children: [
                   Expanded(
                     flex: 1,
                     child: Container(

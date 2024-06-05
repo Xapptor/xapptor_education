@@ -152,7 +152,7 @@ class _CoursesListState extends State<CoursesList> {
                     itemCount: courses.length,
                     itemBuilder: (context, i) {
                       return Column(
-                        children: <Widget>[
+                        children: [
                           ExpansionTile(
                             backgroundColor: Colors.grey[100],
                             title: Text(
@@ -164,7 +164,7 @@ class _CoursesListState extends State<CoursesList> {
                               ),
                             ),
                             initiallyExpanded: true,
-                            children: <Widget>[
+                            children: [
                               Column(
                                 children: build_expandable_content(
                                   course: courses[i],

@@ -112,7 +112,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
     bool portrait = is_portrait(context);
 
     return Column(
-      children: <Widget>[
+      children: [
         const Spacer(flex: 1),
         Expanded(
           flex: 3,
