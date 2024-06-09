@@ -2,10 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:xapptor_ui/widgets/url_text.dart';
-import 'course_certificate.dart';
+import 'model/course_certificate.dart';
 import 'package:printing/printing.dart';
 
-Future<Uint8List> generate_pdf_certificate({
+Future<Uint8List> generate_pdf_certificate_bytes({
   required CourseCertificate certificate,
   required String institution_name,
   required String location,
@@ -278,7 +278,6 @@ Future<Uint8List> generate_pdf_certificate({
       },
     ),
   );
-
   var pdf_bytes = await pdf.save();
   return pdf_bytes;
 }

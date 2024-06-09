@@ -26,11 +26,6 @@ class ClassQuizAnswerItem extends StatefulWidget {
 
 class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     bool is_image = widget.answer_text.contains("http");
 

@@ -66,7 +66,6 @@ class _ClassSessionState extends State<ClassSession> {
   Map video_urls = {};
   bool first_time_updating_text = true;
   late SharedPreferences prefs;
-  String webview_id = const Uuid().v4();
   String complete_url = "";
 
   int source_language_index = 0;
@@ -97,8 +96,6 @@ class _ClassSessionState extends State<ClassSession> {
     }
   }
 
-  // Get texts for the class session.
-
   get_texts() async {
     prefs = await SharedPreferences.getInstance();
 
@@ -125,8 +122,6 @@ class _ClassSessionState extends State<ClassSession> {
       set_video_url();
     });
   }
-
-  // Generate video url for current platform.
 
   String generate_video_url_for_current_platform(String original_url) {
     String new_url = "";
@@ -254,7 +249,7 @@ class _ClassSessionState extends State<ClassSession> {
                 width: MediaQuery.of(context).size.width / (portrait ? 1 : 2),
                 child: Webview(
                   src: complete_url,
-                  id: webview_id,
+                  id: const Uuid().v8(),
                   controller_callback: controller_callback,
                 ),
               ),

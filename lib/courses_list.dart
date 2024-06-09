@@ -1,6 +1,7 @@
+import 'package:xapptor_education/model/course.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
-import 'package:xapptor_logic/get_user_info.dart';
+import 'package:xapptor_logic/user/get_user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_translation/model/text_list.dart';
@@ -63,8 +64,6 @@ class _CoursesListState extends State<CoursesList> {
     setState(() {});
   }
 
-  // Retrieving courses.
-
   get_courses_and_units() async {
     user_info = await get_user_info(FirebaseAuth.instance.currentUser!.uid);
     courses.clear();
@@ -108,7 +107,6 @@ class _CoursesListState extends State<CoursesList> {
         }
       }
     }
-
     setState(() {});
   }
 
@@ -251,11 +249,8 @@ build_expandable_content({
       ),
     );
   }
-
   return column_content;
 }
-
-// Open class session.
 
 open_class_session({
   required String course_id,
@@ -283,24 +278,4 @@ open_class_session({
     ),
   );
   open_screen("home/courses/unit_$unit_id");
-}
-
-// Course model.
-
-class Course {
-  Course(
-    this.id,
-    this.title,
-    this.contents,
-    this.icon,
-    this.unit_ids,
-    this.units_completed_status,
-  );
-
-  final String id;
-  final String title;
-  List<String> contents = [];
-  final IconData icon;
-  List<String> unit_ids = [];
-  List<bool> units_completed_status = [];
 }

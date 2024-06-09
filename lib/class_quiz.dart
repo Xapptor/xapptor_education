@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:xapptor_education/check_if_certificate_exists.dart';
 import 'package:xapptor_translation/model/text_list.dart';
 import 'package:xapptor_translation/translation_stream.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +10,6 @@ import 'package:xapptor_translation/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
-import 'generate_certificate.dart';
 
 class ClassQuiz extends StatefulWidget {
   final String course_id;
@@ -73,8 +73,6 @@ class _ClassQuizState extends State<ClassQuiz> {
   int current_page = 0;
   List<Widget> widgets_list = [];
 
-  // Topbar widgets action.
-
   List<Widget> widgets_action(bool portrait) {
     return [
       Container(
@@ -90,8 +88,6 @@ class _ClassQuizState extends State<ClassQuiz> {
       ),
     ];
   }
-
-  // Retrieving quiz data.
 
   get_quiz_data(String unit_id) {
     FirebaseFirestore.instance.collection('quizzes').doc(unit_id).get().then((DocumentSnapshot doc_snap) {
@@ -175,8 +171,6 @@ class _ClassQuizState extends State<ClassQuiz> {
     setState(() {});
   }
 
-  // Selecting next question.
-
   get_next_question(bool answer_is_correct, int question_id) {
     if (answer_is_correct) {
       questions_result[question_id] = true;
@@ -226,7 +220,7 @@ class _ClassQuizState extends State<ClassQuiz> {
         }).catchError((err) => debugPrint(err));
 
         if (widget.last_unit) {
-          check_if_exist_certificate(
+          check_if_certificate_exists(
             course_id: widget.course_id,
             context: context,
             show_has_certificate: true,

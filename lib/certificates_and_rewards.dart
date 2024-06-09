@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:xapptor_logic/get_user_info.dart';
+import 'package:xapptor_education/check_if_course_was_completed.dart';
+import 'package:xapptor_logic/user/get_user_info.dart';
 import 'package:xapptor_translation/model/text_list.dart';
 import 'package:xapptor_translation/translation_stream.dart';
-import 'course_certificate.dart';
+import 'model/course_certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/widgets/coming_soon_container.dart';
@@ -16,7 +17,6 @@ import 'certificate_visualizer.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
-import 'generate_certificate.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
   final Color topbar_color;
@@ -119,8 +119,6 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
     check_user_courses();
     get_certificates();
   }
-
-  // Checking for user courses.
 
   check_user_courses() {
     if (user_info["products_acquired"] != null) {

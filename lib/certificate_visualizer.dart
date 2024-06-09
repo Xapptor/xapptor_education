@@ -5,12 +5,12 @@ import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:xapptor_logic/check_limit_per_date.dart';
+import 'package:xapptor_logic/date/check_limit_per_date.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
-import 'course_certificate.dart';
+import 'model/course_certificate.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'generate_pdf_certificate.dart';
+import 'generate_pdf_certificate_bytes.dart';
 import 'package:xapptor_router/get_last_path_segment.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
@@ -72,7 +72,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
   }
 
   generate_pdf() async {
-    pdf_bytes = await generate_pdf_certificate(
+    pdf_bytes = await generate_pdf_certificate_bytes(
       institution_name: widget.institution_name,
       location: widget.location,
       website: widget.website,
@@ -130,23 +130,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    // Download PDF certificate file.
-                    String file_name =
-                        "certificate_${widget.certificate!.user_name.split(" ").join("_")}_${widget.certificate!.course_name.split(" ").join("_")}_${widget.certificate!.id}.pdf";
-
-                    if (UniversalPlatform.isWeb) {
-                      FileDownloader.save(
-                        src: pdf_url,
-                        file_name: file_name,
-                      );
-                    } else {
-                      http.get(Uri.parse(pdf_url)).then((response) {
-                        FileDownloader.save(
-                          src: response.bodyBytes,
-                          file_name: file_name,
-                        );
-                      });
-                    }
+                    download_pdf_certificate();
                   },
                 ),
                 FirebaseAuth.instance.currentUser != null
@@ -199,5 +183,26 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
               ),
             ),
     );
+  }
+
+  download_pdf_certificate() {
+    String user_name = widget.certificate!.user_name.split(" ").join("_");
+    String certificate_name = widget.certificate!.course_name.split(" ").join("_");
+
+    String file_name = "certificate_${user_name}_${certificate_name}_${widget.certificate!.id}.pdf";
+
+    if (UniversalPlatform.isWeb) {
+      FileDownloader.save(
+        src: pdf_url,
+        file_name: file_name,
+      );
+    } else {
+      http.get(Uri.parse(pdf_url)).then((response) {
+        FileDownloader.save(
+          src: response.bodyBytes,
+          file_name: file_name,
+        );
+      });
+    }
   }
 }

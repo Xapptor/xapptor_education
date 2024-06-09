@@ -48,10 +48,9 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
               ),
               border_radius: 1000,
               on_pressed: () {
+                Navigator.of(context).pop();
+
                 if (widget.class_quiz.quiz_passed) {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                } else {
                   Navigator.of(context).pop();
                 }
               },
