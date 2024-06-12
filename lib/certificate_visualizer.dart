@@ -8,7 +8,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_logic/date/check_limit_per_date.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'model/course_certificate.dart';
-import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:xapptor_ui/widgets/top_and_bottom/topbar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'generate_pdf_certificate_bytes.dart';
 import 'package:xapptor_router/get_last_path_segment.dart';

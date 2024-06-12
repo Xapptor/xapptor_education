@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/custom_card.dart';
+import 'package:xapptor_ui/widgets/card/custom_card.dart';
 
 class ClassQuizResult extends StatefulWidget {
   final String button_text;

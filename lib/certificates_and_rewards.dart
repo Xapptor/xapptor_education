@@ -6,17 +6,17 @@ import 'package:xapptor_translation/model/text_list.dart';
 import 'package:xapptor_translation/translation_stream.dart';
 import 'model/course_certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
-import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
-import 'package:xapptor_ui/widgets/coming_soon_container.dart';
+import 'package:xapptor_ui/widgets/top_and_bottom/bottom_bar_container.dart';
+import 'package:xapptor_ui/widgets/by_layer/coming_soon_container.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
-import 'package:xapptor_ui/widgets/custom_card.dart';
+import 'package:xapptor_ui/widgets/card/custom_card.dart';
 import 'package:xapptor_translation/language_picker.dart';
 import 'certificate_visualizer.dart';
-import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:xapptor_ui/widgets/top_and_bottom/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
   final Color topbar_color;

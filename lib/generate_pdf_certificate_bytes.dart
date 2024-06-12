@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
-import 'package:xapptor_ui/widgets/url_text.dart';
+import 'package:xapptor_ui/widgets/url/url_text.dart';
 import 'model/course_certificate.dart';
 import 'package:printing/printing.dart';
 
