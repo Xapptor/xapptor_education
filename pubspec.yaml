@@ -20,7 +20,7 @@ dependencies:
   universal_platform: ^1.1.0
   http: ^1.2.0
   shared_preferences: ^2.2.3
-  syncfusion_flutter_pdfviewer: ^25.2.6
+  syncfusion_flutter_pdfviewer: ^26.2.10
   pdf: ^3.10.8
   printing: ^5.12.0
   font_awesome_flutter: ^10.7.0
@@ -40,7 +40,6 @@ dependencies:
     path: ../xapptor_ui
 
 dependency_overrides:
-  device_info_plus: ^10.1.0
   js: ^0.7.1
 
 dev_dependencies:
