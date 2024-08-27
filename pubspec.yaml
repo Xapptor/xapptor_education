@@ -21,8 +21,8 @@ dependencies:
   http: ^1.2.0
   shared_preferences: ^2.2.3
   syncfusion_flutter_pdfviewer: ^26.2.10
-  pdf: ^3.10.8
-  printing: ^5.12.0
+  pdf: ^3.11.1
+  printing: ^5.13.2
   font_awesome_flutter: ^10.7.0
 
   # xapptor_logic: ^0.0.3
