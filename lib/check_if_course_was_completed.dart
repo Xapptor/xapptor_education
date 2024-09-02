@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:xapptor_db/xapptor_db.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_education/check_if_certificate_exists.dart';
 
@@ -9,7 +9,7 @@ check_if_course_was_completed({
   required Map<String, dynamic> user_info,
   required BuildContext context,
 }) {
-  FirebaseFirestore.instance.collection('courses').doc(course_id).get().then((course) async {
+  XapptorDB.instance.collection('courses').doc(course_id).get().then((course) async {
     List units_id = course["units"];
 
     if (user_info["units_completed"] != null) {

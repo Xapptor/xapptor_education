@@ -10,6 +10,7 @@ import 'package:xapptor_translation/language_picker.dart';
 import 'package:xapptor_ui/widgets/top_and_bottom/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_ui/utils/is_portrait.dart';
+import 'package:xapptor_db/xapptor_db.dart';
 
 class ClassQuiz extends StatefulWidget {
   final String course_id;
@@ -90,7 +91,7 @@ class _ClassQuizState extends State<ClassQuiz> {
   }
 
   get_quiz_data(String unit_id) {
-    FirebaseFirestore.instance.collection('quizzes').doc(unit_id).get().then((DocumentSnapshot doc_snap) {
+    XapptorDB.instance.collection('quizzes').doc(unit_id).get().then((DocumentSnapshot doc_snap) {
       List questions_object = doc_snap.get("questions");
 
       questions_object.shuffle();
@@ -215,7 +216,7 @@ class _ClassQuizState extends State<ClassQuiz> {
         page_controller.animateToPage(widgets_list.length - 1,
             duration: const Duration(milliseconds: 800), curve: Curves.elasticOut);
 
-        FirebaseFirestore.instance.collection("users").doc(user_id).update({
+        XapptorDB.instance.collection("users").doc(user_id).update({
           "units_completed": FieldValue.arrayUnion([widget.unit_id]),
         }).catchError((err) => debugPrint(err));
 

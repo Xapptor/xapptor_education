@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:xapptor_db/xapptor_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_education/save_certificate.dart';
@@ -24,7 +24,7 @@ check_if_certificate_exists({
 
   if (has_certificates) {
     for (var certificate in certificates!) {
-      var certificate_snap = await FirebaseFirestore.instance.collection('certificates').doc(certificate).get();
+      var certificate_snap = await XapptorDB.instance.collection('certificates').doc(certificate).get();
 
       String snapshot_course_id = certificate_snap.get("course_id");
 

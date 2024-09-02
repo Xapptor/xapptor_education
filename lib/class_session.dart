@@ -15,6 +15,7 @@ import 'package:xapptor_ui/utils/is_portrait.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'class_quiz.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:xapptor_db/xapptor_db.dart';
 
 class ClassSession extends StatefulWidget {
   final String course_id;
@@ -99,7 +100,7 @@ class _ClassSessionState extends State<ClassSession> {
   get_texts() async {
     prefs = await SharedPreferences.getInstance();
 
-    FirebaseFirestore.instance.collection('units').doc(widget.unit_id).get().then((DocumentSnapshot doc_snap) {
+    XapptorDB.instance.collection('units').doc(widget.unit_id).get().then((DocumentSnapshot doc_snap) {
       text_list.list[0].text_list = [
         doc_snap.get("title"),
         doc_snap.get("subtitle"),

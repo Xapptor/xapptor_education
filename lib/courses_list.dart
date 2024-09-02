@@ -9,6 +9,7 @@ import 'package:xapptor_translation/translation_stream.dart';
 import 'class_session.dart';
 import 'package:xapptor_ui/widgets/top_and_bottom/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:xapptor_db/xapptor_db.dart';
 
 class CoursesList extends StatefulWidget {
   final Color language_picker_items_text_color;
@@ -74,7 +75,7 @@ class _CoursesListState extends State<CoursesList> {
 
         for (int i = 0; i < products_acquired.length; i++) {
           DocumentSnapshot firestore_course =
-              await FirebaseFirestore.instance.collection("courses").doc(products_acquired[i]).get();
+              await XapptorDB.instance.collection("courses").doc(products_acquired[i]).get();
 
           List<String> units = List.from(firestore_course.get("units"));
 

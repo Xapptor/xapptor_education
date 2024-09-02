@@ -66,7 +66,7 @@ get_certificates() async {
         certificates_id = List.from(user_info["certificates"]);
 
         for (var certificate_id in certificates_id) {
-            await FirebaseFirestore.instance
+            await XapptorDB.instance
                 .collection("certificates")
                 .doc(certificate_id)
                 .get()
@@ -74,7 +74,7 @@ get_certificates() async {
                     Map<String, dynamic> data_certificate =
                         snapshot_certificate.data()!;
 
-                    await FirebaseFirestore.instance
+                    await XapptorDB.instance
                         .collection("courses")
                         .doc(data_certificate["course_id"])
                         .get()
