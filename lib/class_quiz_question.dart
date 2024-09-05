@@ -132,15 +132,14 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
             ),
           ),
         ),
-        widget.demos == null
-            ? Container()
-            : Expanded(
-                flex: 3,
-                child: Image.network(
-                  widget.demos![0],
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
+        if (widget.demos != null)
+          Expanded(
+            flex: 3,
+            child: Image.network(
+              widget.demos![0],
+              fit: BoxFit.fitHeight,
+            ),
+          ),
         Expanded(
           flex: 9,
           child: ListView.builder(

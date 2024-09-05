@@ -133,34 +133,32 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
                     download_pdf_certificate();
                   },
                 ),
-                FirebaseAuth.instance.currentUser != null
-                    ? FirebaseAuth.instance.currentUser!.uid == widget.certificate!.user_id
-                        ? IconButton(
-                            icon: const Icon(
-                              Icons.autorenew,
-                              color: Colors.white,
-                            ),
-                            onPressed: () async {
-                              check_limit_per_date(
-                                new_value: widget.certificate!.id,
-                                context: context,
-                                reached_limit_alert_title: "Max certificates generated per day!",
-                                check_limit_per_date_callback: () {
-                                  pdf_url = "";
-                                  setState(() {});
-                                  generate_pdf();
-                                },
-                                cache_lifetime_in_seconds: Duration.secondsPerDay * 5,
-                                limit: 5,
-                                limit_field_name: "generate_certificate_limit",
-                                array_field_name: "certificates",
-                                reach_limit: ReachLimit.by_day,
-                                save_same_value_multiple_times: true,
-                              );
-                            },
-                          )
-                        : Container()
-                    : Container(),
+                if (FirebaseAuth.instance.currentUser != null)
+                  if (FirebaseAuth.instance.currentUser!.uid == widget.certificate!.user_id)
+                    IconButton(
+                      icon: const Icon(
+                        Icons.autorenew,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
+                        check_limit_per_date(
+                          new_value: widget.certificate!.id,
+                          context: context,
+                          reached_limit_alert_title: "Max certificates generated per day!",
+                          check_limit_per_date_callback: () {
+                            pdf_url = "";
+                            setState(() {});
+                            generate_pdf();
+                          },
+                          cache_lifetime_in_seconds: Duration.secondsPerDay * 5,
+                          limit: 5,
+                          limit_field_name: "generate_certificate_limit",
+                          array_field_name: "certificates",
+                          reach_limit: ReachLimit.by_day,
+                          save_same_value_multiple_times: true,
+                        );
+                      },
+                    ),
               ]
             : [],
         custom_leading: null,

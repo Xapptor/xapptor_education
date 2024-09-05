@@ -85,7 +85,7 @@ class _ClassQuizState extends State<ClassQuiz> {
                 language_picker_items_text_color: widget.language_picker_items_text_color,
                 update_source_language: update_source_language,
               )
-            : Container(),
+            : null,
       ),
     ];
   }
