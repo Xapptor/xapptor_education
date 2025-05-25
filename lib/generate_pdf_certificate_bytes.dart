@@ -49,8 +49,11 @@ Future<Uint8List> generate_pdf_certificate_bytes({
 
   var pinyon_script_regular_font = await PdfGoogleFonts.pinyonScriptRegular();
 
-  PdfColor main_pdf_color = PdfColor.fromInt(
-    main_color.value,
+  PdfColor main_pdf_color = PdfColor(
+    main_color.r,
+    main_color.g,
+    main_color.b,
+    main_color.a,
   );
 
   pdf.addPage(

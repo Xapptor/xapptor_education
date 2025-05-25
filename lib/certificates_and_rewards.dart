@@ -140,7 +140,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   }
 
   get_certificates() async {
-    String user_name = user_info["firstname"] + " " + user_info["lastname"];
+    String user_name = '${user_info["firstname"]} ${user_info["lastname"]}';
 
     certificates.clear();
     if (user_info["certificates"] != null) {
@@ -214,7 +214,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                           height: screen_height / (portrait ? 6 : 8),
                           margin: margin,
                           child: CustomCard(
-                            splash_color: widget.button_color_2.withOpacity(0.2),
+                            splash_color: widget.button_color_2.withValues(alpha: 0.2),
                             elevation: 3,
                             border_radius: 20,
                             on_pressed: () {

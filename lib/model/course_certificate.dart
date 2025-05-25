@@ -27,14 +27,14 @@ Future<CourseCertificate> get_certificate_from_id({
 
   if (user_name == null) {
     var user_snap = await XapptorDB.instance.collection("users").doc(certificate_snap.get("user_id")).get();
-    user_name = user_snap.get("firstname") + " " + user_snap.get("lastname");
+    user_name = '${user_snap.get("firstname")} ${user_snap.get("lastname")}';
   }
 
   return CourseCertificate(
     id: id,
     date: timestamp_to_date_string(certificate_snap.get("date")),
     course_name: course_snap.get("name"),
-    user_name: user_name!,
+    user_name: user_name,
     user_id: certificate_snap.get("user_id"),
   );
 }

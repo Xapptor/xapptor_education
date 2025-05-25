@@ -11,19 +11,19 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cloud_firestore: ^5.3.0
-  firebase_auth: ^5.2.0
-  firebase_storage: ^12.2.0
+  cloud_firestore: ^5.6.7
+  firebase_auth: ^5.5.3
+  firebase_storage: ^12.4.5
 
   auto_size_text_pk: ^3.0.0
-  uuid: ^4.4.0
+  uuid: ^4.5.1
   universal_platform: ^1.1.0
-  http: ^1.2.0
-  shared_preferences: ^2.2.3
-  syncfusion_flutter_pdfviewer: ^26.2.10
-  pdf: ^3.11.1
-  printing: ^5.13.2
-  font_awesome_flutter: ^10.7.0
+  http: ^1.4.0
+  shared_preferences: ^2.5.3
+  syncfusion_flutter_pdfviewer: ^29.2.4
+  pdf: ^3.11.3
+  printing: ^5.14.2
+  font_awesome_flutter: ^10.8.0
 
   # xapptor_logic: ^0.0.3
   # xapptor_router: ^0.0.2

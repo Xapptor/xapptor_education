@@ -35,7 +35,7 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
       height: MediaQuery.of(context).size.height / 6,
       padding: const EdgeInsets.all(5),
       child: CustomCard(
-        splash_color: widget.text_color.withOpacity(0.3),
+        splash_color: widget.text_color.withValues(alpha: 0.3),
         linear_gradient: LinearGradient(
           colors: [
             background_color,
