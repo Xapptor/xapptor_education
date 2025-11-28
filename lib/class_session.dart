@@ -212,9 +212,7 @@ class _ClassSessionState extends State<ClassSession> {
                 widthFactor: portrait ? 0.85 : 0.3,
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: sized_box_space * 4,
-                    ),
+                    const SizedBox(height: sized_box_space * 4),
                     AutoSizeText(
                       "${text_list.get(source_language_index)[0]} - ${text_list.get(source_language_index)[1]}",
                       textAlign: TextAlign.left,
@@ -227,9 +225,7 @@ class _ClassSessionState extends State<ClassSession> {
                       maxLines: 2,
                       overflow: TextOverflow.clip,
                     ),
-                    SizedBox(
-                      height: sized_box_space * 2,
-                    ),
+                    const SizedBox(height: sized_box_space * 2),
                     SelectableText(
                       text_list.get(source_language_index)[2],
                       textAlign: TextAlign.left,
@@ -239,9 +235,7 @@ class _ClassSessionState extends State<ClassSession> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                      height: sized_box_space * 2,
-                    ),
+                    const SizedBox(height: sized_box_space * 2),
                   ],
                 ),
               ),
@@ -258,9 +252,7 @@ class _ClassSessionState extends State<ClassSession> {
                 widthFactor: portrait ? 0.85 : 0.3,
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: sized_box_space * 2,
-                    ),
+                    const SizedBox(height: sized_box_space * 2),
                     SelectableText(
                       text_list.get(source_language_index)[3],
                       textAlign: TextAlign.left,
@@ -270,9 +262,7 @@ class _ClassSessionState extends State<ClassSession> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                      height: sized_box_space * 2,
-                    ),
+                    const SizedBox(height: sized_box_space * 2),
                     SizedBox(
                       height: 40,
                       width: 200,
@@ -311,9 +301,7 @@ class _ClassSessionState extends State<ClassSession> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: sized_box_space * 4,
-                    ),
+                    const SizedBox(height: sized_box_space * 4),
                   ],
                 ),
               ),
