@@ -200,15 +200,15 @@ class _ClassQuizState extends State<ClassQuiz> {
           (100 * (questions_result.length - possible_next_page_index.length)) / questions_result.length;
 
       if (possible_next_page_index.isNotEmpty) {
-        int nextPageIndex = 0;
+        int next_page_index = 0;
 
         if (possible_next_page_index.length > 1) {
-          nextPageIndex = possible_next_page_index.firstWhere((possible) => possible != current_page);
+          next_page_index = possible_next_page_index.firstWhere((possible) => possible != current_page);
         } else {
-          nextPageIndex = possible_next_page_index[0];
+          next_page_index = possible_next_page_index[0];
         }
 
-        page_controller.animateToPage(nextPageIndex,
+        page_controller.animateToPage(next_page_index,
             duration: const Duration(milliseconds: 800), curve: Curves.elasticOut);
       } else {
         quiz_passed = true;
