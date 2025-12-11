@@ -20,10 +20,10 @@ dependencies:
   universal_platform: ^1.1.0
   http: ^1.6.0
   shared_preferences: ^2.5.3
-  syncfusion_flutter_pdfviewer: ^31.2.12
+  syncfusion_flutter_pdfviewer: ^28.2.6
   pdf: ^3.11.3
   printing: ^5.14.2
-  font_awesome_flutter: ^10.12.0
+  font_awesome_flutter: ^10.9.1
 
   # xapptor_logic: ^0.0.3
   # xapptor_router: ^0.0.2
