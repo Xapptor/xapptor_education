@@ -11,7 +11,7 @@ import 'model/course_certificate.dart';
 import 'package:xapptor_ui/widgets/top_and_bottom/topbar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'generate_pdf_certificate_bytes.dart';
-import 'package:xapptor_router/get_last_path_segment.dart';
+import 'package:xapptor_router/V2/get_last_path_segment_v2.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -91,7 +91,7 @@ class _CertificateVisualizerState extends State<CertificateVisualizer> {
     if (widget.certificate != null) {
       get_storage_ref();
     } else {
-      String certificate_id = get_last_path_segment();
+      String certificate_id = get_last_path_segment_v2();
 
       widget.certificate = await get_certificate_from_id(
         id: certificate_id,

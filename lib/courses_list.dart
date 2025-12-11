@@ -1,6 +1,5 @@
 import 'package:xapptor_education/model/course.dart';
-import 'package:xapptor_router/app_screen.dart';
-import 'package:xapptor_router/app_screens.dart';
+import 'package:xapptor_router/V2/app_screens_v2.dart';
 import 'package:xapptor_logic/user/get_user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -263,8 +262,8 @@ open_class_session({
   required Color text_color,
   required String website,
 }) {
-  add_new_app_screen(
-    AppScreen(
+  add_new_app_screen_v2(
+    AppScreenV2(
       name: "home/courses/unit_$unit_id",
       child: ClassSession(
         course_id: course_id,
@@ -278,5 +277,5 @@ open_class_session({
       ),
     ),
   );
-  open_screen("home/courses/unit_$unit_id");
+  open_screen_v2("home/courses/unit_$unit_id");
 }

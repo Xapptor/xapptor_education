@@ -9,8 +9,7 @@ import 'package:xapptor_ui/widgets/top_and_bottom/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/top_and_bottom/bottom_bar_container.dart';
 import 'package:xapptor_ui/widgets/by_layer/coming_soon_container.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_router/app_screen.dart';
-import 'package:xapptor_router/app_screens.dart';
+import 'package:xapptor_router/V2/app_screens_v2.dart';
 import 'package:xapptor_ui/widgets/card/custom_card.dart';
 import 'package:xapptor_translation/language_picker.dart';
 import 'certificate_visualizer.dart';
@@ -219,8 +218,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                             border_radius: 20,
                             on_pressed: () {
                               String certificate_id = certificates[i].id;
-                              add_new_app_screen(
-                                AppScreen(
+                              add_new_app_screen_v2(
+                                AppScreenV2(
                                   name: "home/certificates_and_rewards/$certificate_id",
                                   child: CertificateVisualizer(
                                     certificate: certificates[i],
@@ -234,7 +233,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                   ),
                                 ),
                               );
-                              open_screen("home/certificates_and_rewards/$certificate_id");
+                              open_screen_v2("home/certificates_and_rewards/$certificate_id");
                             },
                             child: Center(
                               child: Container(
